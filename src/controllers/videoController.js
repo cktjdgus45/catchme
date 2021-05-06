@@ -1,25 +1,31 @@
+const fakeUser = {
+    username: "cha",
+    loggedIn: true
+}
+
+
 export const home = (req, res) => {
-    return res.send('home');
+    res.render('home', { pageTitle: "home", potato: "potato", fakeUser });
 }
 export const search = (req, res) => {
-    return res.send('search');
+    res.send('search', { pageTitle: "search" });
 }
 
 export const upload = (req, res) => {
-    return res.send('upload');
+    res.send('upload', { pageTitle: "Upload" });
 }
 
 export const see = (req, res) => {
     console.log(req.params);
-    return res.send('see');
+    res.send('see', { pageTitle: "wath Video" });
 }
 
 export const editVideo = (req, res) => {
     console.log(req.params);
-    return res.send('editVideo');
+    res.send('editVideo', { pageTitle: "edit" });
 }
 
 export const deleteVideo = (req, res) => {
     console.log(req.params);
-    return res.send('deleteVideo');
+    res.send('deleteVideo', { pageTitle: "delete" });
 }
