@@ -19,6 +19,7 @@ app.listen(4000, handleListening);
 app.set('view engine', 'pug');
 app.set('views', process.cwd() + '/src/views');
 app.use(logger);
+app.use(express.urlencoded({ extended: true }));
 app.use(localsMiddleware);
 app.use('/', globalRouter);
 app.use('/users', userRouter);
