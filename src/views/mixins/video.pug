@@ -3,9 +3,8 @@ mixin video(video)
         h4
             a(href=`/videos/${video.id}`)=video.title
             p=video.hashtags
-        ul 
-            li #{video.createdAt} 
-            li #{video.description}
-            li #{video.meta.rating}
-            li #{video.meta.views}
-            li #{video.comments} comments
+        small=video.createdAt 
+        p=video.description
+        p #{video.meta.rating} ratings
+        p #{video.meta.views} views
+        hr
