@@ -8,8 +8,18 @@ export const home = async (req, res) => {
         console.log(error);
     }
 }
-export const search = (req, res) => {
-    return res.render('search', { pageTitle: "search" });
+export const search = async (req, res) => {
+    const { keyword } = req.query;
+    let videos = [];
+    if (keyword) {
+        videos = await Video.find({
+            title: {
+                $regex: new RegExp(keyword, "i")
+            }
+        });
+        return res.render('search', { pageTitle: `searching ${keyword}`, videos });
+    }
+    return res.render('search', { pageTitle: "search", videos });
 }
 
 export const getUpload = (req, res) => {
@@ -71,6 +81,8 @@ export const postEdit = async (req, res) => {
 }
 
 
-export const deleteVideo = (req, res) => {
-    return res.render('deleteVideo', { pageTitle: "delete" });
+export const deleteVideo = async (req, res) => {
+    const { id } = req.params;
+    await Video.findByIdAndDelete(id);
+    return res.redirect('/');
 }
