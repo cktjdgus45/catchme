@@ -10,11 +10,11 @@ export const postJoin = async (req, res) => {
     const pageTitle = "Join";
     const { email, username, password, password2, name, location } = req.body;
     if (password !== password2) {
-        return res.render('join', { pageTitle, errorMessage: "입력하신 비밀번호가 일치하지 않습니다." });
+        return res.status(400).render('join', { pageTitle, errorMessage: "입력하신 비밀번호가 일치하지 않습니다." });
     }
     const isNameOrEmailExist = await User.exists({ $or: [{ username }, { email }] });
     if (isNameOrEmailExist) {
-        return res.render('join', { pageTitle, errorMessage: "이미 사용하고 있는 닉네임 또는 이메일 입니다." });
+        return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 닉네임 또는 이메일 입니다." });
     }
     await User.create({ email, username, password, password2, name, location });
     return res.redirect('/login');
