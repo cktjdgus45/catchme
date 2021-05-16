@@ -1,15 +1,22 @@
-import User from "../models/User";
+import User from '../models/User';
+import bcrypt from 'bcrypt';
 
 export const getLogin = (req, res) => {
     return res.render('login');
 }
 export const postLogin = async (req, res) => {
+    const pageTitle = "Login";
     const { username, password } = req.body;
-    const isUserExist = await User.exists({ username });
-    if (!isUserExist) {
-        return res.status(400).render('login', { pageTitle: "Login", errorMessage: "존재하지 않는 아이디 입니다." });
+    const user = await User.findOne({ username })
+    if (!user) {
+        return res.status(400).render('login', { pageTitle, errorMessage: "존재하지 않는 아이디 입니다." });
     }
-    res.end();
+    const isSamePassword = await bcrypt.compare(password, user.password);
+    if (!isSamePassword) {
+        return res.status(400).render('login', { pageTitle, errorMessage: "틀린 비밀번호 입니다." });
+    }
+    console.log('로그인 성공');
+    return res.redirect('/');
 }
 
 export const getJoin = (req, res) => {
@@ -23,7 +30,7 @@ export const postJoin = async (req, res) => {
     }
     const isNameOrEmailExist = await User.exists({ $or: [{ username }, { email }] });
     if (isNameOrEmailExist) {
-        return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 닉네임 또는 이메일 입니다." });
+        return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 아이디 또는 이메일 입니다." });
     }
     try {
         await User.create({ email, username, password, password2, name, location });
