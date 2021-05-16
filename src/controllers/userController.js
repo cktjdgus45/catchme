@@ -1,8 +1,17 @@
 import User from "../models/User";
 
-export const login = (req, res) => {
+export const getLogin = (req, res) => {
     return res.render('login');
 }
+export const postLogin = async (req, res) => {
+    const { username, password } = req.body;
+    const isUserExist = await User.exists({ username });
+    if (!isUserExist) {
+        return res.status(400).render('login', { pageTitle: "Login", errorMessage: "존재하지 않는 아이디 입니다." });
+    }
+    res.end();
+}
+
 export const getJoin = (req, res) => {
     return res.render('join', { pageTitle: 'Join ' });
 }
@@ -16,7 +25,11 @@ export const postJoin = async (req, res) => {
     if (isNameOrEmailExist) {
         return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 닉네임 또는 이메일 입니다." });
     }
-    await User.create({ email, username, password, password2, name, location });
+    try {
+        await User.create({ email, username, password, password2, name, location });
+    } catch (error) {
+        res.status(400).render('join', { pageTitle, errorMessage: error._message });
+    }
     return res.redirect('/login');
 }
 

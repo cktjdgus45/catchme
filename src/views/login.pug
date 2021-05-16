@@ -1,4 +1,14 @@
 extends base.pug
 
 block content 
-    p login
+    if(errorMessage)
+            p=errorMessage 
+    form(method="POST")
+        input(name="username",type="text",placeholder="아이디",required,autocomplete="off")
+        input(name="password",type="password",placeholder="비밀번호",required,autocomplete="new-password")
+        input(type="submit",value="로그인")      
+
+    hr  
+    div 
+        span 아직 계정이 없으신가요?      
+        a(href="/join") 회원가입 하러가기 &rarr;   
