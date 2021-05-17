@@ -1,7 +1,6 @@
 export const localsMiddleware = (req, res, next) => {
-    res.locals.fakeUser = {
-        username: "cha",
-        loggedIn: false
-    }
+    res.locals.loggedIn = Boolean(req.session.loggedIn);
+    res.locals.siteName = "Catch Me";
+    res.locals.loggedInUser = req.session.user;
     next();
 }

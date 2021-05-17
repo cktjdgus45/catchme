@@ -15,7 +15,8 @@ export const postLogin = async (req, res) => {
     if (!isSamePassword) {
         return res.status(400).render('login', { pageTitle, errorMessage: "틀린 비밀번호 입니다." });
     }
-    console.log('로그인 성공');
+    req.session.loggedIn = true;
+    req.session.user = user;
     return res.redirect('/');
 }
 
