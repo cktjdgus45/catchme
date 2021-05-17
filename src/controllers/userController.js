@@ -55,3 +55,19 @@ export const edit = (req, res) => {
 export const remove = (req, res) => {
     return res.render('remove');
 }
+
+export const startGithubLogin = (req, res) => {
+    const baseUrl = "https://github.com/login/oauth/authorize";
+    const config = {
+        client_id: "dba39af3da1b27225f79",
+        allow_signup: false,
+        scope: "read:user user:email"
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    return res.redirect(finalUrl);
+}
+
+export const finishGithubLogin = (req, res) => {
+
+}
