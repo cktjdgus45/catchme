@@ -2,13 +2,14 @@ import User from '../models/User';
 import bcrypt from 'bcrypt';
 import fetch from 'node-fetch';
 
+
 export const getLogin = (req, res) => {
     return res.render('login');
 }
 export const postLogin = async (req, res) => {
     const pageTitle = "Login";
     const { username, password } = req.body;
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ username, socialOnly: false })
     if (!user) {
         return res.status(400).render('login', { pageTitle, errorMessage: "존재하지 않는 아이디 입니다." });
     }
@@ -24,6 +25,7 @@ export const postLogin = async (req, res) => {
 export const getJoin = (req, res) => {
     return res.render('join', { pageTitle: 'Join ' });
 }
+
 export const postJoin = async (req, res) => {
     const pageTitle = "Join";
     const { email, username, password, password2, name, location } = req.body;
@@ -48,14 +50,13 @@ export const profile = (req, res) => {
 }
 
 export const logout = (req, res) => {
-    return res.render('logout');
+    req.session.destroy();
+    return res.redirect('/');
 }
 export const edit = (req, res) => {
     return res.render('edit');
 }
-export const remove = (req, res) => {
-    return res.render('remove');
-}
+
 
 export const startGithubLogin = (req, res) => {
     const baseUrl = "https://github.com/login/oauth/authorize";
@@ -102,26 +103,22 @@ export const finishGithubLogin = async (req, res) => {
         if (!emailObj) {
             return res.redirect("/login");
         }
-        const existingUser = await User.findOne({ email: emailObj.email });
-        if (existingUser) {
-            req.session.loggedIn = true;
-            req.session.user = existingUser;
-            return res.redirect('/');
-
-        } else {
+        let user = await User.findOne({ email: emailObj.email });
+        if (!user) {
             //create an account
-            const user = await User.create({
+            user = await User.create({
                 email: emailObj.email,
+                avatarUrl: userData.avatar_url,
                 username: userData.login,
                 password: "",
                 socialOnly: true,
                 name: userData.name,
                 location: userData.location
             });
-            req.session.loggedIn = true;
-            req.session.user = user;
-            return res.redirect('/');
         }
+        req.session.loggedIn = true;
+        req.session.user = user;
+        return res.redirect('/');
     } else {
         return res.redirect('/login');
     }
