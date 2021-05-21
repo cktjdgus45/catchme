@@ -8,8 +8,8 @@ export const getLogin = (req, res) => {
 }
 export const postLogin = async (req, res) => {
     const pageTitle = "Login";
-    const { username, password } = req.body;
-    const user = await User.findOne({ username, socialOnly: false })
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, socialOnly: false })
     if (!user) {
         return res.status(400).render('login', { pageTitle, errorMessage: "존재하지 않는 아이디 입니다." });
     }
@@ -28,16 +28,16 @@ export const getJoin = (req, res) => {
 
 export const postJoin = async (req, res) => {
     const pageTitle = "Join";
-    const { email, username, password, password2, name, location } = req.body;
+    const { email, password, password2, name, location } = req.body;
     if (password !== password2) {
         return res.status(400).render('join', { pageTitle, errorMessage: "입력하신 비밀번호가 일치하지 않습니다." });
     }
-    const isNameOrEmailExist = await User.exists({ $or: [{ username }, { email }] });
+    const isNameOrEmailExist = await User.exists({ email });
     if (isNameOrEmailExist) {
-        return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 아이디 또는 이메일 입니다." });
+        return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 아이디 입니다." });
     }
     try {
-        await User.create({ email, username, password, password2, name, location });
+        await User.create({ email, password, password2, name, location });
     } catch (error) {
         res.status(400).render('join', { pageTitle, errorMessage: error._message });
     }
@@ -56,7 +56,69 @@ export const logout = (req, res) => {
 export const edit = (req, res) => {
     return res.render('edit');
 }
+export const startKakaoLogin = (req, res) => {
+    const baseUrl = "https://kauth.kakao.com/oauth/authorize";
+    const config = {
+        client_id: process.env.KKO_CLIENT,
+        redirect_uri: "http://localhost:4000/users/kakao/finish",
+        response_type: "code",
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    return res.redirect(finalUrl);
+}
 
+export const finishKakaoLogin = async (req, res) => {
+    const baseUrl = "https://kauth.kakao.com/oauth/token";
+    const config = {
+        grant_type: "authorization_code",
+        client_id: process.env.KKO_CLIENT,
+        redirect_uri: "http://localhost:4000/users/kakao/finish",
+        code: req.query.code,
+        client_secret: process.env.KKO_SECRET
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    const tokenRequest = await (await fetch(finalUrl, {
+        method: "POST",
+        headers: {
+            Accept: "application/json;charset=UTF-8",
+        }
+    })).json();
+    if ("access_token" in tokenRequest) {
+        const { access_token } = tokenRequest;
+        const apiUrl = "https://kapi.kakao.com/v2/user/me";
+        const apiData = await (await fetch(`${apiUrl}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                Accept: "application/x-www-form-urlencoded;charset=utf-8",
+            }
+        })).json();
+        const data = apiData.kakao_account;
+        const userData = data.profile;
+        const emailData = data.email;
+        if (data.is_email_valid === false || data.is_email_verified === false) {
+            return res.redirect('/login');
+        }
+        let user = await User.findOne({ email: emailData, socialOnly: true });
+        if (!user) {
+            user = await User.create({
+                email: emailData,
+                avatarUrl: userData.profile_image_url,
+                password: "",
+                socialOnly: true,
+                name: userData.nickname,
+                location: ""
+            });
+        }
+        req.session.loggedIn = true;
+        req.session.user = user;
+        return res.redirect('/');
+    } else {
+        return res.redirect('/login');
+    }
+}
 
 export const startGithubLogin = (req, res) => {
     const baseUrl = "https://github.com/login/oauth/authorize";
@@ -93,7 +155,6 @@ export const finishGithubLogin = async (req, res) => {
                 Authorization: `token ${access_token}`
             }
         })).json();
-        console.log(userData);
         const emailData = await (await fetch(`${apiUrl}/user/emails`, {
             headers: {
                 Authorization: `token ${access_token}`
@@ -103,13 +164,11 @@ export const finishGithubLogin = async (req, res) => {
         if (!emailObj) {
             return res.redirect("/login");
         }
-        let user = await User.findOne({ email: emailObj.email });
+        let user = await User.findOne({ email: emailObj.email, socialOnly: true });
         if (!user) {
-            //create an account
             user = await User.create({
                 email: emailObj.email,
                 avatarUrl: userData.avatar_url,
-                username: userData.login,
                 password: "",
                 socialOnly: true,
                 name: userData.name,
