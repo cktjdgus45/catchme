@@ -1,0 +1,10 @@
+extends base.pug
+
+block content
+    form(method="POST")
+        input(name="email",type="email",placeholder="이메일",required,autocomplete="off",autocapitalize="off",value=loggedInUser.email)
+        input(name="name",type="text",placeholder="이름",required,autocomplete="chrome-off",value=loggedInUser.name)
+        input(name="location",type="text",placeholder="위치",required,autocomplete="chrome-off",value=loggedInUser.location)    
+        input(type="submit",value="업데이트")      
+
+        

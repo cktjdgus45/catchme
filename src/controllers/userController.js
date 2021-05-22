@@ -1,7 +1,25 @@
 import User from '../models/User';
 import bcrypt from 'bcrypt';
 import fetch from 'node-fetch';
+import { reset } from 'nodemon';
 
+
+export const profile = (req, res) => {
+    return res.render('profile');
+}
+
+export const logout = (req, res) => {
+    req.session.destroy();
+    return res.redirect('/');
+}
+
+export const getEdit = (req, res) => {
+    return res.render('edit-profile', { pageTitle: "Edit profile" });
+}
+
+export const postEdit = (req, res) => {
+    res.redirect('/');
+}
 
 export const getLogin = (req, res) => {
     return res.render('login');
@@ -44,32 +62,6 @@ export const postJoin = async (req, res) => {
     return res.redirect('/login');
 }
 
-
-export const profile = (req, res) => {
-    return res.render('profile');
-}
-
-export const logout = (req, res) => {
-    req.session.destroy();
-    return res.redirect('/');
-}
-export const edit = (req, res) => {
-    return res.render('edit');
-}
-
-
-export const startKakaoLogin = (req, res) => {
-    const baseUrl = "https://kauth.kakao.com/oauth/authorize";
-    const config = {
-        client_id: process.env.KKO_CLIENT,
-        redirect_uri: "http://localhost:4000/users/kakao/finish",
-        response_type: "code",
-    }
-    const params = new URLSearchParams(config).toString();
-    const finalUrl = `${baseUrl}?${params}`;
-    return res.redirect(finalUrl);
-}
-
 export const startNaverLogin = (req, res) => {
     const baseUrl = "https://nid.naver.com/oauth2.0/authorize";
     const config = {
@@ -82,6 +74,7 @@ export const startNaverLogin = (req, res) => {
     const finalUrl = `${baseUrl}?${params}`;
     return res.redirect(finalUrl);
 }
+
 export const finishNaverLogin = async (req, res) => {
     const baseUrl = "https://nid.naver.com/oauth2.0/token";
     const config = {
@@ -129,6 +122,7 @@ export const finishNaverLogin = async (req, res) => {
         return res.redirect('/login');
     }
 }
+
 export const startGoogleLogin = (req, res) => {
     const baseUrl = "https://accounts.google.com/o/oauth2/v2/auth";
     const config = {
@@ -191,6 +185,19 @@ export const finishGoogleLogin = async (req, res) => {
         return res.redirect('/login');
     }
 }
+
+export const startKakaoLogin = (req, res) => {
+    const baseUrl = "https://kauth.kakao.com/oauth/authorize";
+    const config = {
+        client_id: process.env.KKO_CLIENT,
+        redirect_uri: "http://localhost:4000/users/kakao/finish",
+        response_type: "code",
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    return res.redirect(finalUrl);
+}
+
 
 export const finishKakaoLogin = async (req, res) => {
     const baseUrl = "https://kauth.kakao.com/oauth/token";
