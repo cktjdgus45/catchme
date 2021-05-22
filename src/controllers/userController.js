@@ -56,6 +56,8 @@ export const logout = (req, res) => {
 export const edit = (req, res) => {
     return res.render('edit');
 }
+
+
 export const startKakaoLogin = (req, res) => {
     const baseUrl = "https://kauth.kakao.com/oauth/authorize";
     const config = {
@@ -66,6 +68,128 @@ export const startKakaoLogin = (req, res) => {
     const params = new URLSearchParams(config).toString();
     const finalUrl = `${baseUrl}?${params}`;
     return res.redirect(finalUrl);
+}
+
+export const startNaverLogin = (req, res) => {
+    const baseUrl = "https://nid.naver.com/oauth2.0/authorize";
+    const config = {
+        client_id: process.env.NAVER_CLIENT,
+        redirect_uri: "http://localhost:4000/users/naver/finish",
+        response_type: "code",
+        state: "RANDOM_STATE"
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    return res.redirect(finalUrl);
+}
+export const finishNaverLogin = async (req, res) => {
+    const baseUrl = "https://nid.naver.com/oauth2.0/token";
+    const config = {
+        grant_type: "authorization_code",
+        client_id: process.env.NAVER_CLIENT,
+        client_secret: process.env.NAVER_SECRET,
+        code: req.query.code,
+        state: req.query.state
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    const tokenRequest = await (await fetch(finalUrl, {
+        method: "POST",
+        headers: {
+            Accept: "application/json;charset=UTF-8",
+        }
+    })).json();
+    if ("access_token" in tokenRequest) {
+        const { access_token } = tokenRequest;
+        const apiUrl = "https://openapi.naver.com/v1/nid/me";
+        const apiData = await (await fetch(`${apiUrl}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                Accept: "application/json;charset=UTF-8"
+            }
+        })).json();
+        const userData = apiData.response;
+        const emailData = userData.email;
+        let user = await User.findOne({ email: emailData, socialOnly: true });
+        if (!user) {
+            user = await User.create({
+                email: emailData,
+                avatarUrl: userData.profile_image_url,
+                password: "",
+                socialOnly: true,
+                name: userData.nickname,
+                location: ""
+            });
+        }
+        req.session.loggedIn = true;
+        req.session.user = user;
+        return res.redirect('/');
+    } else {
+        return res.redirect('/login');
+    }
+}
+export const startGoogleLogin = (req, res) => {
+    const baseUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+    const config = {
+        client_id: process.env.GOOGLE_CLIENT,
+        redirect_uri: "http://localhost:4000/users/google/finish",
+        response_type: "code",
+        scope: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"].join(" ")
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    return res.redirect(finalUrl);
+}
+
+export const finishGoogleLogin = async (req, res) => {
+    const baseUrl = "https://oauth2.googleapis.com/token";
+    const config = {
+        grant_type: "authorization_code",
+        client_id: process.env.GOOGLE_CLIENT,
+        client_secret: process.env.GOOGLE_SECRET,
+        redirect_uri: "http://localhost:4000/users/google/finish",
+        code: req.query.code
+    }
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    const tokenRequest = await (await fetch(finalUrl, {
+        method: "POST",
+        headers: {
+            Accept: "application/json;charset=UTF-8",
+        }
+    })).json();
+    if ("access_token" in tokenRequest) {
+        const { access_token } = tokenRequest;
+        const apiUrl = "https://www.googleapis.com/oauth2/v1/userinfo";
+        const userData = await (await fetch(`${apiUrl}`, {
+            method: "GET",
+            headers: {
+                ContentType: "application/json;charset=UTF-8",
+                Authorization: `Bearer ${access_token}`
+            }
+        })).json();
+        const emailData = userData.email;
+        if (userData.verified_email === false) {
+            return res.redirect('/login');
+        }
+        let user = await User.findOne({ email: emailData, socialOnly: true });
+        if (!user) {
+            user = await User.create({
+                email: emailData,
+                avatarUrl: userData.picture,
+                password: "",
+                socialOnly: true,
+                name: userData.name,
+                location: userData.locale
+            });
+        }
+        req.session.loggedIn = true;
+        req.session.user = user;
+        return res.redirect('/');
+    } else {
+        return res.redirect('/login');
+    }
 }
 
 export const finishKakaoLogin = async (req, res) => {
@@ -88,7 +212,7 @@ export const finishKakaoLogin = async (req, res) => {
     if ("access_token" in tokenRequest) {
         const { access_token } = tokenRequest;
         const apiUrl = "https://kapi.kakao.com/v2/user/me";
-        const apiData = await (await fetch(`${apiUrl}`, {
+        const apiData = await (await fetch(apiUrl, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${access_token}`,

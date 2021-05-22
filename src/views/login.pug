@@ -11,8 +11,16 @@ block content
         input(name="password",type="password",placeholder="비밀번호",required,autocomplete="new-password")
         input(type="submit",value="로그인")      
         br
-        a(href="/users/github/start") 깃헙으로 로그인
-        a(href="/users/kakao/start") 카카오계정으로 로그인
+        
+        a(href="/users/github/start") 
+            i(class="fab fa-github")          
+    
+        a(href="/users/kakao/start")
+            i(class="fas fa-comment")
+        a(href="/users/naver/start")
+            i(class="fab fa-facebook-square")
+        a(href="/users/google/start")
+            i(class="fab fa-google")
     hr  
     div 
         span 아직 계정이 없으신가요?      
