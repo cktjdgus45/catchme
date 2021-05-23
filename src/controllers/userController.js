@@ -13,12 +13,29 @@ export const logout = (req, res) => {
     return res.redirect('/');
 }
 
-export const getChangePassword = (req,res)=>{
-    return res.render("change-password",{pageTitle:"Change Password"});
+export const getChangePassword = (req, res) => {
+    return res.render("change-password", { pageTitle: "Change Password" });
 }
-export const postChangePassword = (req,res)=>{
+export const postChangePassword = async (req, res) => {
     //send notification
-    return res.redirect('/');
+    const {
+        session: {
+            user: { _id, password }
+        },
+        body: { oldPassword, newPassword, newPasswordConfirmation }
+    } = req;
+    if (newPassword !== newPasswordConfirmation) {
+        return res.status(400).render('change-password', { pageTitle: "비밀번호 변경", errorMessage: "새 비밀번호가 일치하지 않습니다." })
+    }
+    const isSamePassword = await bcrypt.compare(oldPassword, password);
+    if (!isSamePassword) {
+        return res.status(400).render('change-password', { pageTitle: "비밀번호 변경", errorMessage: "현재 비밀번호가 일치하지 않습니다." });
+    }
+    const user = await User.findById(_id);
+    user.password = newPassword;
+    await user.save();
+    req.session.user.password = user.password;
+    return res.redirect('/users/logout');
 }
 
 export const getEdit = (req, res) => {
@@ -49,16 +66,16 @@ export const postEdit = async (req, res) => {
 }
 
 export const getLogin = (req, res) => {
-    return res.render('login');
+    return res.render('login', { pageTitle: "계정 로그인" });
 }
 export const postLogin = async (req, res) => {
-    const pageTitle = "Login";
+    const pageTitle = "계정 로그인";
     const { email, password } = req.body;
-    const user = await User.findOne({ email, socialOnly: false })
+    const user = await User.findOne({ email, socialOnly: false });
     if (!user) {
         return res.status(400).render('login', { pageTitle, errorMessage: "존재하지 않는 아이디 입니다." });
     }
-    const isSamePassword = await bcrypt.compare(password, user.password);
+    const isSamePassword = await bcrypt.compare(password[1], user.password);
     if (!isSamePassword) {
         return res.status(400).render('login', { pageTitle, errorMessage: "틀린 비밀번호 입니다." });
     }
