@@ -17,8 +17,27 @@ export const getEdit = (req, res) => {
     return res.render('edit-profile', { pageTitle: "Edit profile" });
 }
 
-export const postEdit = (req, res) => {
-    res.redirect('/');
+export const postEdit = async (req, res) => {
+    const userData = req.session.user;
+    const {
+        session: {
+            user: { _id }
+        },
+        body: { name, email, location }
+    } = req;
+    if (userData.name !== name || userData.email !== email || userData.location !== location) {
+        const isEmailExist = await User.exists({ email });
+        if (isEmailExist) {
+            return res.status(400).render('edit-profile', { pageTitle, errorMessage: "이미 사용하고 있는 아이디 입니다." });
+        }
+        const updatedUser = await User.findByIdAndUpdate(_id, {
+            name,
+            email,
+            location
+        }, { new: true });
+        req.session.user = updatedUser;
+        return res.redirect('/');
+    }
 }
 
 export const getLogin = (req, res) => {
@@ -50,8 +69,8 @@ export const postJoin = async (req, res) => {
     if (password !== password2) {
         return res.status(400).render('join', { pageTitle, errorMessage: "입력하신 비밀번호가 일치하지 않습니다." });
     }
-    const isNameOrEmailExist = await User.exists({ email });
-    if (isNameOrEmailExist) {
+    const isEmailExist = await User.exists({ email });
+    if (isEmailExist) {
         return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 아이디 입니다." });
     }
     try {
