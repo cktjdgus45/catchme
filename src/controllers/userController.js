@@ -13,6 +13,14 @@ export const logout = (req, res) => {
     return res.redirect('/');
 }
 
+export const getChangePassword = (req,res)=>{
+    return res.render("change-password",{pageTitle:"Change Password"});
+}
+export const postChangePassword = (req,res)=>{
+    //send notification
+    return res.redirect('/');
+}
+
 export const getEdit = (req, res) => {
     return res.render('edit-profile', { pageTitle: "Edit profile" });
 }
