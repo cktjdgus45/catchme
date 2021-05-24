@@ -2,7 +2,9 @@ extends base.pug
 
 block content
     p=errorMessage
-    form(method="POST")
+    form(method="POST",enctype="multipart/form-data")
+        label(for="avatar") 프로필 사진
+        input(type="file",id="avatar",name="avatar",accept="image/*")
         input(name="email",type="email",placeholder="이메일",required,autocomplete="off",autocapitalize="off",value=loggedInUser.email)
         input(name="name",type="text",placeholder="이름",required,autocomplete="chrome-off",value=loggedInUser.name)
         input(name="location",type="text",placeholder="위치",required,autocomplete="chrome-off",value=loggedInUser.location)    

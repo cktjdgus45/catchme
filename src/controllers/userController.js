@@ -43,6 +43,7 @@ export const getEdit = (req, res) => {
 }
 
 export const postEdit = async (req, res) => {
+    console.log(req.file);
     const userData = req.session.user;
     const {
         session: {
@@ -53,7 +54,7 @@ export const postEdit = async (req, res) => {
     if (userData.name !== name || userData.email !== email || userData.location !== location) {
         const isEmailExist = await User.exists({ email });
         if (isEmailExist) {
-            return res.status(400).render('edit-profile', { pageTitle, errorMessage: "이미 사용하고 있는 아이디 입니다." });
+            return res.status(400).render('edit-profile', { pageTitle:"프로필 변경", errorMessage: "이미 사용하고 있는 아이디 입니다." });
         }
         const updatedUser = await User.findByIdAndUpdate(_id, {
             name,
