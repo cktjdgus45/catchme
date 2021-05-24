@@ -43,27 +43,26 @@ export const getEdit = (req, res) => {
 }
 
 export const postEdit = async (req, res) => {
-    console.log(req.file);
     const userData = req.session.user;
     const {
         session: {
-            user: { _id }
+            user: { _id, avatarUrl }
         },
-        body: { name, email, location }
+        body: { name, email, location },
+        file
     } = req;
-    if (userData.name !== name || userData.email !== email || userData.location !== location) {
-        const isEmailExist = await User.exists({ email });
-        if (isEmailExist) {
-            return res.status(400).render('edit-profile', { pageTitle:"프로필 변경", errorMessage: "이미 사용하고 있는 아이디 입니다." });
-        }
-        const updatedUser = await User.findByIdAndUpdate(_id, {
-            name,
-            email,
-            location
-        }, { new: true });
-        req.session.user = updatedUser;
-        return res.redirect('/');
+    const isEmailExist = await User.exists({ email });
+    if (userData.email !== email && isEmailExist) {
+        return res.status(400).render('edit-profile', { pageTitle: "프로필 변경", errorMessage: "이미 사용하고 있는 아이디 입니다." });
     }
+    const updatedUser = await User.findByIdAndUpdate(_id, {
+        avatarUrl: file ? file.path : avatarUrl,
+        name,
+        email,
+        location
+    }, { new: true });
+    req.session.user = updatedUser;
+    return res.redirect('/');
 }
 
 export const getLogin = (req, res) => {
@@ -153,13 +152,15 @@ export const finishNaverLogin = async (req, res) => {
         if (!user) {
             user = await User.create({
                 email: emailData,
-                avatarUrl: userData.profile_image_url,
+                avatarUrl: userData.profile_image,
                 password: "",
                 socialOnly: true,
-                name: userData.nickname,
+                name: userData.name,
                 location: ""
             });
         }
+        user.avatarUrl = userData.profile_image;
+        user.name = userData.name;
         req.session.loggedIn = true;
         req.session.user = user;
         return res.redirect('/');
@@ -223,6 +224,8 @@ export const finishGoogleLogin = async (req, res) => {
                 location: userData.locale
             });
         }
+        user.avatarUrl = userData.picture;
+        user.name = userData.name;
         req.session.loggedIn = true;
         req.session.user = user;
         return res.redirect('/');
@@ -288,6 +291,8 @@ export const finishKakaoLogin = async (req, res) => {
                 location: ""
             });
         }
+        user.avatarUrl = userData.profile_image_url;
+        user.name = userData.nickname;
         req.session.loggedIn = true;
         req.session.user = user;
         return res.redirect('/');
@@ -351,6 +356,8 @@ export const finishGithubLogin = async (req, res) => {
                 location: userData.location
             });
         }
+        user.avatarUrl = userData.avatar_url;
+        user.name = userData.name;
         req.session.loggedIn = true;
         req.session.user = user;
         return res.redirect('/');
