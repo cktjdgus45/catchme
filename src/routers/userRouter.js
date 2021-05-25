@@ -6,7 +6,7 @@ const userRouter = express.Router();
 
 userRouter.use('/uploads', express.static("uploads"));
 userRouter.get('/logout', protectorMiddleware, logout);
-userRouter.get(':id(\\d+)', protectorMiddleware, profile);
+userRouter.get('/:id', profile);
 userRouter.route('/edit').all(protectorMiddleware).get(getEdit).post(avatarUpload.single('avatar'), postEdit);
 userRouter.route('/change-password').all(protectorMiddleware).get(getChangePassword).post(postChangePassword);
 userRouter.get('/github/start', publicOnlyMiddleware, startGithubLogin);

@@ -4,8 +4,13 @@ import fetch from 'node-fetch';
 import { reset } from 'nodemon';
 
 
-export const profile = (req, res) => {
-    return res.render('profile');
+export const profile = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+        return res.status(400).render('404', { pageTitle: "계정 오류" });
+    }
+    return res.render('profile', { pageTitle: `${user.name}의 프로필`, user });
 }
 
 export const logout = (req, res) => {
