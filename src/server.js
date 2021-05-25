@@ -22,6 +22,7 @@ app.use(session({
     store: MongoStore.create({ mongoUrl: process.env.DB_URL })
 }))
 
+app.use('/uploads', express.static("uploads"));
 app.use(localsMiddleware);
 app.use('/', rootRouter);
 app.use('/users', userRouter);
