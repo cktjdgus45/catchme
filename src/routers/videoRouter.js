@@ -1,5 +1,5 @@
 import express from 'express';
-import { protectorMiddleware, videoUpload } from '../../localsMiddleware';
+import { protectorMiddleware, videoUpload } from '../localsMiddleware';
 import { deleteVideo, getEdit, getUpload, postEdit, postUpload, watch } from '../controllers/videoController';
 
 const videoRouter = express.Router();

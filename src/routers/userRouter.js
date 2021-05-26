@@ -1,5 +1,5 @@
 import express from 'express';
-import { protectorMiddleware, publicOnlyMiddleware, avatarUpload } from '../../localsMiddleware';
+import { protectorMiddleware, publicOnlyMiddleware, avatarUpload } from '../localsMiddleware';
 import { finishGithubLogin, finishKakaoLogin, finishNaverLogin, finishGoogleLogin, logout, profile, startGoogleLogin, startGithubLogin, startKakaoLogin, startNaverLogin, getEdit, postEdit, getChangePassword, postChangePassword } from '../controllers/userController';
 
 const userRouter = express.Router();
