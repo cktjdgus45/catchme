@@ -1,5 +1,6 @@
 import Video from '../models/Video';
 import User from '../models/User';
+import Comment from '../models/Comment';
 
 export const home = async (req, res) => {
     try {
@@ -108,8 +109,26 @@ export const deleteVideo = async (req, res) => {
     return res.redirect('/');
 }
 
-export const createComment = (req, res) => {
-    console.log(req.body.text);
-    console.log(req.params);
-    return res.redirect('/');
+export const createComment = async (req, res) => {
+    const {
+        body: {
+            text
+        },
+        params: {
+            id
+        },
+        session: {
+            user
+        }
+    } = req;
+    const video = await Video.findById(id);
+    if (!video) {
+        return res.sendStatus(404);
+    }
+    const comment = await Comment.create({
+        text,
+        owner: user._id,
+        video: id,
+    });
+    return res.sendStatus(201);
 }

@@ -16,6 +16,7 @@ const handleSubmit = (event) => {
             "Content-Type": "application/json"
         }
     })
+    textarea.value = "";
 }
 
 if (form) {
