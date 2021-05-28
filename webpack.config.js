@@ -1,11 +1,15 @@
 const path = require('path');
+const BASE_JS = "./src/client/js/";
 
 module.exports = {
     watch: true,
     mode: "development",
-    entry: "./src/client/js/main.js",
+    entry: {
+        main: BASE_JS + "main.js",
+        commentSection: BASE_JS + "commentSection.js"
+    },
     output: {
-        filename: "main.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, 'assets', 'js'),
         clean: true
     },

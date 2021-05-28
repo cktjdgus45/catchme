@@ -1,7 +1,7 @@
 extends base.pug
 
 block content 
-    video(src="/"+video.fileUrl,width="1000",height="500",controls=true)
+    video(src="/"+video.fileUrl,width="1000",height="500",controls=true,data-id=video._id)
     div
         p=video.description
         small Uploaded by
@@ -10,5 +10,12 @@ block content
         a(href=`${video.id}/edit`) Edit Video &rarr;
         br
         a(href=`${video.id}/delete`) Delete Video &rarr;
-
+    hr
+    if loggedIn
+        div.video__comments 
+            form.video__comment-form#commentForm
+                textarea(cols="30",rows="10",placeholder="댓글 추가...")
+                button 댓글
+block scripts
+    script(src="/assets/js/commentSection.js") 
 
