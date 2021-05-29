@@ -1,6 +1,6 @@
 const form = document.getElementById('commentForm');
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
     event.preventDefault();
     const video = document.querySelector('video');
     const textarea = form.querySelector('textarea');
@@ -9,7 +9,7 @@ const handleSubmit = (event) => {
     if (text === "") {
         return;
     }
-    fetch(`/api/videos/${videoId}/comment`, {
+    const { status } = await fetch(`/api/videos/${videoId}/comment`, {
         method: "POST",
         body: JSON.stringify({ text }),
         headers: {
@@ -17,6 +17,9 @@ const handleSubmit = (event) => {
         }
     })
     textarea.value = "";
+    if (status === 201) {
+        console.log("create fake Comments");
+    }
 }
 
 if (form) {
