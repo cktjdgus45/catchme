@@ -19,7 +19,8 @@ block content
     div.video__comments
         ul 
             each comment in video.comments.reverse() 
-                li=comment.text   
+                li
+                    span #{comment.text}   
 block scripts
     script(src="/assets/js/commentSection.js") 
 

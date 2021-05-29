@@ -1,5 +1,14 @@
 const form = document.getElementById('commentForm');
 
+const addComment = (text) => {
+    const videoComments = document.querySelector('.video__comments ul');
+    const newComment = document.createElement("li");
+    const span = document.createElement("span");
+    span.innerText = `${text}`;
+    newComment.appendChild(span);
+    videoComments.prepend(newComment);
+}
+
 const handleSubmit = async (event) => {
     event.preventDefault();
     const video = document.querySelector('video');
@@ -18,7 +27,7 @@ const handleSubmit = async (event) => {
     })
     textarea.value = "";
     if (status === 201) {
-        console.log("create fake Comments");
+        addComment(text);
     }
 }
 
