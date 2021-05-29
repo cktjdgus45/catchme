@@ -118,7 +118,7 @@ export const createComment = async (req, res) => {
             id
         },
         session: {
-            user
+            user: { _id }
         }
     } = req;
     const video = await Video.findById(id);
@@ -127,10 +127,36 @@ export const createComment = async (req, res) => {
     }
     const comment = await Comment.create({
         text,
-        owner: user._id,
+        owner: _id,
         video: id,
     });
+
     video.comments.push(comment._id);
     video.save();
+    return res.status(201).json({
+        newCommentId: comment._id
+    });
+}
+
+export const deleteComment = async (req, res) => {
+    const { id } = req.params;
+    const { user: { _id } } = req.session;
+    const comment = await Comment.findById(id);
+    const video = await Video.findById(comment.video);
+    if (!video) {
+        return res.sendStatus(404);
+    }
+    video.comments = video.comments.filter((commentId) => {
+        return String(commentId) !== id
+    });
+
+    video.save();
+    if (!comment) {
+        return res.sendStatus(404);
+    }
+    if (String(comment.owner) !== _id) {
+        return res.status(403).redirect('/');
+    }
+    await Comment.findByIdAndDelete(id);
     return res.sendStatus(201);
 }
