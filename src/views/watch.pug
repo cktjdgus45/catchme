@@ -22,7 +22,7 @@ block content
                 li(data-id=comment._id)
                     span #{comment.text}
                     if String(comment.owner)===String(loggedInUser._id)
-                    span.delBtn ❌
+                        span.delBtn ❌
 block scripts
     script(src="/assets/js/commentSection.js") 
 

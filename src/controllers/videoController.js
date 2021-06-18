@@ -77,23 +77,27 @@ export const getEdit = async (req, res) => {
 }
 
 export const postEdit = async (req, res) => {
+    const {
+        user: { _id },
+    } = req.session;
+    const { file: { path: fileUrl } } = req;
     const { id } = req.params;
     const { title, description, hashtags } = req.body;
-    const video = await Video.exists({ _id: id });
+    const video = await Video.findById(id);
     if (!video) {
-        return res.status(404).render('404', { pageTitle: 'Video Not Found' });
+        return res.status(404).render("404", { pageTitle: "Video not found." });
     }
-    if (String(video.owner) !== _id) {
-        return res.status(403).redirect('/');
+    if (String(video.owner) !== String(_id)) {
+        return res.status(403).redirect("/");
     }
     await Video.findByIdAndUpdate(id, {
         title,
         description,
-        hashtags: Video.formatHashtags(hashtags)
+        hashtags: Video.formatHashtags(hashtags),
+        fileUrl
     });
     return res.redirect(`/videos/${id}`);
-}
-
+};
 
 export const deleteVideo = async (req, res) => {
     const { id } = req.params;
@@ -105,7 +109,7 @@ export const deleteVideo = async (req, res) => {
     if (String(video.owner) !== _id) {
         return res.status(403).redirect('/');
     }
-    await Video.findByIdAndDelete(id);
+    await Video.findByIdAndDelete(id); //mongoDB method중 하나. 찾고 삭제.
     return res.redirect('/');
 }
 
@@ -132,7 +136,7 @@ export const createComment = async (req, res) => {
     });
 
     video.comments.push(comment._id);
-    video.save();
+    video.save();//db저장.
     return res.status(201).json({
         newCommentId: comment._id
     });
@@ -150,7 +154,7 @@ export const deleteComment = async (req, res) => {
         return String(commentId) !== id
     });
 
-    video.save();
+    video.save();//db저장.
     if (!comment) {
         return res.sendStatus(404);
     }
