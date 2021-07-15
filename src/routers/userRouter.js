@@ -11,7 +11,7 @@ userRouter.get('/logout', protectorMiddleware, logout);
 // => /users/logout 으로 가면 protectorMiddleware 거친후 ,  logout 컨트롤러를 실행하겠다.
 
 userRouter.get('/:id', profile);
-userRouter.route('/edit').all(protectorMiddleware).get(getEdit).post(avatarUpload.single('avatar'), postEdit);
+userRouter.route('/:id([0-9a-f]{24})/edit').all(protectorMiddleware).get(getEdit).post(avatarUpload.single('avatar'), postEdit);
 // => /users/edit 로 가면 protectorMiddleware 거친후 , getEdit ,avatarUpload 컨트롤러를 실행하겠다. 
 userRouter.route('/change-password').all(protectorMiddleware).get(getChangePassword).post(postChangePassword);
 userRouter.get('/github/start', publicOnlyMiddleware, startGithubLogin);

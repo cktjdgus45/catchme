@@ -68,6 +68,7 @@ export const postEdit = async (req, res) => {
         // server.js 의 app.use(express.urlencoded({ extended: true })); 땜에 가능.
         file
     } = req;
+    console.log(file);
     const isEmailExist = await User.exists({ email });
     if (userData.email !== email && isEmailExist) {
         return res.status(400).render('edit-profile', { pageTitle: "프로필 변경", errorMessage: "이미 사용하고 있는 아이디 입니다." });
