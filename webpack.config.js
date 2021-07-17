@@ -1,17 +1,22 @@
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const BASE_JS = "./src/client/js/";
 
 module.exports = {
     watch: true,
     mode: "development",
+    plugins: [new MiniCssExtractPlugin({
+        filename: "css/styles.css"
+    })],
     entry: {
-        app: ['babel-polyfill', BASE_JS + "commentSection.js"],
+        //app: ['babel-polyfill', BASE_JS + "commentSection.js"],
         main: BASE_JS + "main.js",
         commentSection: BASE_JS + "commentSection.js"
     },
     output: {
-        filename: "[name].js",
-        path: path.resolve(__dirname, 'assets', 'js'),
+        filename: "js/[name].js",
+        path: path.resolve(__dirname, 'assets'),
         clean: true
     },
     module: {
@@ -26,6 +31,10 @@ module.exports = {
                         ]
                     }
                 }
+            },
+            {
+                test: /\.scss$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
             }
         ]
     }
