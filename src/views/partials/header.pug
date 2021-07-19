@@ -1,0 +1,21 @@
+header 
+    a(href="/")
+        img(src="/img/cmlogo.png")
+    nav 
+        ul             
+            if loggedIn
+                li 
+                    a(href=`/users/${loggedInUser._id}/edit`) 프로필 편집
+                li 
+                    a(href="/users/logout") 로그아웃                        
+                li
+                    a(href=`/users/${loggedInUser._id}`) #{loggedInUser.name} 의 프로필
+                li
+                    a(href="/videos/upload") 비디오업로드
+            else 
+                li 
+                    a(href="/login") 로그인
+                li 
+                    a(href="/join") 회원가입                   
+            li 
+                a(href="/search") 검색

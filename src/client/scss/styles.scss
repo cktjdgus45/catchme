@@ -1,5 +1,19 @@
-@import "./_variable";
+//Config
+@import "./config/_variable";
+@import "./config/_reset";
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
-body{
-    background-color: $red;
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+
+//Components
+
+@import "./components/header.scss";
+@import "./components/footer.scss";
+
+//Screens
+
+//Defaults
+a{
+    text-decoration: none;
+    color: inherit;
 }

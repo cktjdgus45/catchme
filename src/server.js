@@ -31,6 +31,7 @@ app.use(session({
 
 app.use('/uploads', express.static("uploads"));
 app.use('/assets', express.static("assets"));
+app.use('/img', express.static("img"));
 //업로드나 브라우저 script(src="/assets")할떄 파일을 서버가 이해할수 있도록 하기위한 설정 . 안하면 서버는 파일의 존재를 모름.
 
 app.use(localsMiddleware);
