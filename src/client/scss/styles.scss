@@ -3,17 +3,22 @@
 @import "./config/_reset";
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
-* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+//Default
+@import "./config/default.scss";
 
 //Components
 
 @import "./components/header.scss";
+@import "./components/video.scss";
+@import "./components/shared.scss";
+@import "./components/form.scss";
+@import "./components/logo.scss";
 @import "./components/footer.scss";
+
 
 //Screens
 
-//Defaults
-a{
-    text-decoration: none;
-    color: inherit;
-}
+@import "./screens/home.scss";
+@import "./screens/search.scss";
+
+

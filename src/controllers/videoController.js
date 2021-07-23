@@ -4,8 +4,8 @@ import Comment from '../models/Comment';
 
 export const home = async (req, res) => {
     try {
-        const videos = await Video.find({});
-        return res.render('home', { pageTitle: "home", videos });
+        const videos = await Video.find({}).populate("owner");
+        return res.render('home', { pageTitle: "Home", videos });
     } catch (error) {
         console.log(error);
     }
@@ -19,9 +19,10 @@ export const search = async (req, res) => {
                 $regex: new RegExp(keyword, "i"),
             }
         });
-        return res.render('search', { pageTitle: `searching ${keyword}`, videos });
+        console.log(videos, keyword);
+        return res.render('search', { pageTitle: `Home`, videos });
     }
-    return res.render('search', { pageTitle: "search", videos });
+    return res.render('search', { pageTitle: "Home", videos });
 }
 
 export const getUpload = (req, res) => {
@@ -50,7 +51,7 @@ export const postUpload = async (req, res) => {
         return res.redirect('/');
     } catch (error) {
         console.log(error);
-        return res.render('upload', { pageTitle: "Upload Video", errorMessage: error._message });
+        return res.render('upload', { pageTitle: "비디오 업로드", errorMessage: error._message });
     }
 }
 
@@ -73,7 +74,7 @@ export const getEdit = async (req, res) => {
     if (String(video.owner) !== _id) {
         return res.status(403).redirect('/');
     }
-    return res.render('editVideo', { pageTitle: `Edit ${video.title}`, video });
+    return res.render('editVideo', { pageTitle: `${video.title}`, video });
 }
 
 export const postEdit = async (req, res) => {
@@ -109,7 +110,7 @@ export const deleteVideo = async (req, res) => {
     if (String(video.owner) !== _id) {
         return res.status(403).redirect('/');
     }
-    await Video.findByIdAndDelete(id); //mongoDB method중 하나. 찾고 삭제.
+    await Video.findByIdAndDelete(id);
     return res.redirect('/');
 }
 
@@ -136,7 +137,7 @@ export const createComment = async (req, res) => {
     });
 
     video.comments.push(comment._id);
-    video.save();//db저장.
+    video.save();
     return res.status(201).json({
         newCommentId: comment._id
     });
@@ -154,7 +155,7 @@ export const deleteComment = async (req, res) => {
         return String(commentId) !== id
     });
 
-    video.save();//db저장.
+    video.save();
     if (!comment) {
         return res.sendStatus(404);
     }

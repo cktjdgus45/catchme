@@ -1,0 +1,58 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+
+main{
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button{
+    cursor: pointer;
+}
+
+button,
+textarea,
+input {
+    all: unset;
+    font-size: 16px;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    border:none;
+    background-color: #fff;
+}
+// button:focus,
+// button:active,
+// textarea:focus,
+// textarea:active,
+// input:focus,
+// input:active {
+//     outline: none;
+//     box-shadow: none;
+// }
+ul,
+ol,
+li {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+html,
+body {
+    height:100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+

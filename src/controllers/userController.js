@@ -5,39 +5,32 @@ import fetch from 'node-fetch';
 
 
 export const profile = async (req, res) => {
-    const { id } = req.params; // 라우터에서 '/:id' 부분이 req.params. /:potato이면 req.params 에서 potato 값을 가져온다.
+    const { id } = req.params;
 
     const user = await User.findById(id).populate("videos");
-    //mongoose를 이용한 DB를 다루는 method . findById(), findByIdAndUpdate() 등등.
 
     if (!user) {
         return res.status(400).render('404', { pageTitle: "계정 오류" });
-        //DB에 id를 통해 찾고자하는 data가 없다면 404.pug를 렌더링 하겠다. (보여준다.)
     }
     return res.render('profile', { pageTitle: `${user.name}의 프로필`, user });
-    //DB 에 id를 통해 찾고자하는 data가 있다면 profile.pug를 렌더링 하겠다.
 }
 
 export const logout = (req, res) => {
     req.session.destroy();
-    //express-session을 install 해서 사용가능한 기능 . 세션에 저장되있는 로그인한 user정보를 destroy(파괴)한다.
     return res.redirect('/');
-    //redirect 다시돌아간다 홈으로.
 }
 
 export const getChangePassword = (req, res) => {
-    return res.render("change-password", { pageTitle: "Change Password" });
+    return res.render("change-password", { pageTitle: "비밀번호 변경" });
     //render은 get 리퀘스트
 }
 export const postChangePassword = async (req, res) => {
-    //db에서 data를 가져와 세션에 유저를 저장하거나 업데이트 ,삭제, 생성 , 하는 작업은 post 리퀘스트.
     const {
         session: {
             user: { _id, password }
         },
         body: { oldPassword, newPassword, newPasswordConfirmation }
     } = req;
-    //_id, password,oldPassword, newPassword, newPasswordConfirmation 의 값을 가져온다는 코드. ex) ==req.body.oldPassword
 
     if (newPassword !== newPasswordConfirmation) {
         return res.status(400).render('change-password', { pageTitle: "비밀번호 변경", errorMessage: "새 비밀번호가 일치하지 않습니다." })
@@ -55,7 +48,7 @@ export const postChangePassword = async (req, res) => {
 }
 
 export const getEdit = (req, res) => {
-    return res.render('edit-profile', { pageTitle: "Edit profile" });
+    return res.render('edit-profile', { pageTitle: "프로파일 업데이트" });
 }
 
 export const postEdit = async (req, res) => {
@@ -65,13 +58,11 @@ export const postEdit = async (req, res) => {
             user: { _id, avatarUrl }
         },
         body: { name, email, location },
-        // server.js 의 app.use(express.urlencoded({ extended: true })); 땜에 가능.
         file
     } = req;
-    console.log(file);
     const isEmailExist = await User.exists({ email });
     if (userData.email !== email && isEmailExist) {
-        return res.status(400).render('edit-profile', { pageTitle: "프로필 변경", errorMessage: "이미 사용하고 있는 아이디 입니다." });
+        return res.status(400).render('edit-profile', { pageTitle: "프로파일 업데이트", errorMessage: "이미 사용하고 있는 아이디 입니다." });
     }
     const updatedUser = await User.findByIdAndUpdate(_id, {
         avatarUrl: file ? file.path : avatarUrl,
@@ -93,23 +84,22 @@ export const postLogin = async (req, res) => {
     if (!user) {
         return res.status(400).render('login', { pageTitle, errorMessage: "존재하지 않는 아이디 입니다." });
     }
-    const isSamePassword = await bcrypt.compare(password[1], user.password); //compare(1,2) 1,2를 비교해서 같으면 true 반환. bcrypt는 db에저장할 비밀번호를 해쉬화 하기위한 모듈.
+    const isSamePassword = await bcrypt.compare(password[1], user.password);
     if (!isSamePassword) {
         return res.status(400).render('login', { pageTitle, errorMessage: "틀린 비밀번호 입니다." });
     }
     req.session.loggedIn = true;
     req.session.user = user;
-    //session에 db에서 가져온 user data와 loggedIn true값 설정.
 
     return res.redirect('/');
 }
 
 export const getJoin = (req, res) => {
-    return res.render('join', { pageTitle: 'Join ' });
+    return res.render('join', { pageTitle: '계정 생성' });
 }
 
 export const postJoin = async (req, res) => {
-    const pageTitle = "Join";
+    const pageTitle = "계정 생성";
     const { email, password, password2, name, location } = req.body;
     if (password !== password2) {
         return res.status(400).render('join', { pageTitle, errorMessage: "입력하신 비밀번호가 일치하지 않습니다." });
@@ -120,7 +110,6 @@ export const postJoin = async (req, res) => {
     }
     try {
         await User.create({ email, password, password2, name, location });
-        //mongoDB의 create method.  터미널에 mongo 입력 -> use catchme -> show collections -> db.collection.find({}) 또는 db.collection.remove({})
     } catch (error) {
         res.status(400).render('join', { pageTitle, errorMessage: error._message });
     }
@@ -128,7 +117,6 @@ export const postJoin = async (req, res) => {
 }
 
 export const startNaverLogin = (req, res) => {
-    //네이버 api문서 참고. 카카오 구글 깃헙 다 똑같은 패턴.
     const baseUrl = "https://nid.naver.com/oauth2.0/authorize";
     const config = {
         client_id: process.env.NAVER_CLIENT,

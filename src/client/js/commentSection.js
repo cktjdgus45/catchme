@@ -1,6 +1,7 @@
 const form = document.getElementById('commentForm');  //pug에 있는 html태그를 js에 가져옴.
 const delBtns = document.querySelectorAll('.delBtn'); ////pug에 있는 html태그를 js에 가져옴.
 
+
 const addComment = (text, id) => {
     const videoComments = document.querySelector('.video__comments ul'); ////pug에 있는 html태그를 js에 가져옴.
     const newComment = document.createElement("li");  //html을 js를 통해 새로만듬.

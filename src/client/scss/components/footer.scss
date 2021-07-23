@@ -1,0 +1,25 @@
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    opacity: 0.8;
+    height: 60px;
+    position: relative; //자기위치기준
+    transform: translateY(-100%);
+    color: $--color-main-blue;
+    font-weight: $--weight-regular;
+    margin: 0 300px;
+    border-top: 1px solid $--color-light-grey;
+}
+
+html,body{
+    height: 100%;
+}
+
+.wrapper{
+    height: auto; //contents가 곧 height 100%능가하면 실행.
+    min-height: 100%; //최소 100%
+    padding-bottom: 60px;
+    margin: 0 300px;
+}

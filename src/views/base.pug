@@ -5,9 +5,10 @@ html(lang='ko')
         link(rel="stylesheet" href="/assets/css/styles.css")
         script(src="https://kit.fontawesome.com/920f3667b2.js" crossorigin="anonymous")
     body
-        include partials/header.pug 
-        main 
-            block content
+        div.wrapper
+            include partials/header.pug 
+            main 
+                block content
         include partials/footer.pug
         script(src="/assets/js/main.js")
         block scripts
