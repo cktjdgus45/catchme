@@ -1,17 +1,13 @@
 header 
     a(href="/")
-        img(src="/img/cmlogo.png").header__logo
+        img(src="/img/logo.png").header__logo
     if pageTitle === "Home"
         form(method="GET",action="/search").search__form
             input(type="text",placeholder="검색",name="keyword")
             button(type="submit").search__btn
                 i.fas.fa-search
     nav 
-        ul             
-            li 
-                a(href="/search")
-                    i.fas.fa-search
-            
+        ul                                     
             if loggedIn
                 li 
                     a(href=`/users/${loggedInUser._id}/edit`) 프로필 편집

@@ -2,15 +2,22 @@
     max-width: 500px;
     margin: 0 auto;
     display: flex;
-    margin-bottom: 40px;
+    margin-bottom: 110px;
     flex-direction: column;        
     input{
         padding: 10px 25px;
         margin-bottom: 5px;
-        background-color: #F5F5F5;
+        background-color: $--color-input-bg;
+        border: 1px solid $--color-input-bg;
         &:placeholder{
-            color: rgba(255,255,255,0.7);
+            color: $--color-white-opacity;
         }
+        &:not([type="submit"]){
+            &:hover,&:focus{
+                border: 1px solid $--color-main-blue;
+            }
+        }
+        transition: border $--animation-duration ease;
     }
     input[type="submit"]{
         padding: 10px 20px;
