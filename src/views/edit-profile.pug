@@ -1,16 +1,31 @@
 extends base.pug
+include mixins/video
 
 block content
     p=errorMessage
-    img(src="/"+loggedInUser.avatarUrl ,width="100",height="100")
-    form(method="POST",enctype="multipart/form-data")
-        label(for="avatar") 프로필 사진
-        input(type="file",id="avatar",name="avatar",accept="image/*")
+    form(method="POST",enctype="multipart/form-data").auth__form.profile__form
+        label(for="avatar").profile__form-avatar
+            img(src=`${loggedInUser.avatarUrl && loggedInUser.avatarUrl.startsWith('uploads') ? "/"+loggedInUser.avatarUrl : loggedInUser.avatarUrl}`,width="100",height="100")#preview-image
+            span 새 이미지 업로드
+            input(type="file",id="avatar",name="avatar",accept="image/*").input-image
         input(name="email",type="email",placeholder="이메일",required,autocomplete="off",autocapitalize="off",value=loggedInUser.email)
         input(name="name",type="text",placeholder="이름",required,autocomplete="chrome-off",value=loggedInUser.name)
         input(name="location",type="text",placeholder="위치",required,autocomplete="chrome-off",value=loggedInUser.location)    
         input(type="submit",value="업데이트")   
         if !loggedInUser.socialOnly  
-            hr
-            a(href="change-password") 비밀번호 변경하기 &rarr;
+            a(href="change-password").profile__form-changepassword change password
+    div.video-grid
+        each video in user.videos
+            +video(video)            
+            +video(video)            
+            +video(video)            
+            +video(video)            
+            +video(video)            
+            +video(video)            
+            +video(video)            
+            +video(video)            
+        else 
+            span.empty__message No videos found
+block scripts
+    script(src="/assets/js/profile.js")
         

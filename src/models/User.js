@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({ //스키마
+const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
-    avatarUrl: String,
+    avatarUrl: { type: String, default: '/img/user.png' },
     socialOnly: { type: Boolean, default: false },
     password: String,
     name: { type: String, required: true },
@@ -12,12 +12,12 @@ const userSchema = new mongoose.Schema({ //스키마
     comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: "Comment" }],
 });
 
-userSchema.pre('save', async function () { //컨트롤러에서 save() 실행되기전에 미리 실행되는 함수.
+userSchema.pre('save', async function () {
     if (this.isModified("password")) {
-        this.password = await bcrypt.hash(this.password, 5); //비밀번호를 해쉬화 하는과정. 
+        this.password = await bcrypt.hash(this.password, 5);
     }
 })
 
-const userModel = mongoose.model('User', userSchema); //스키마의 모델의 이름은 'User' 로 설정. 
+const userModel = mongoose.model('User', userSchema);
 
-export default userModel; //export 
+export default userModel;

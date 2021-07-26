@@ -1,6 +1,6 @@
 .search__form{
     display: flex;
-    max-width: 700px;
+    max-width: 600px;
     margin: 0 auto;
     input{
         all: unset;
@@ -17,5 +17,6 @@
         border-left: none;
         color: gray;
         border-radius: 0px 5px 5px 0px;
+        cursor: pointer;
     }
 }

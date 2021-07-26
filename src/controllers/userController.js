@@ -4,17 +4,6 @@ import bcrypt from 'bcrypt';
 import fetch from 'node-fetch';
 
 
-export const profile = async (req, res) => {
-    const { id } = req.params;
-
-    const user = await User.findById(id).populate("videos");
-
-    if (!user) {
-        return res.status(400).render('404', { pageTitle: "계정 오류" });
-    }
-    return res.render('profile', { pageTitle: `${user.name}의 프로필`, user });
-}
-
 export const logout = (req, res) => {
     req.session.destroy();
     return res.redirect('/');
@@ -22,7 +11,6 @@ export const logout = (req, res) => {
 
 export const getChangePassword = (req, res) => {
     return res.render("change-password", { pageTitle: "비밀번호 변경" });
-    //render은 get 리퀘스트
 }
 export const postChangePassword = async (req, res) => {
     const {
@@ -38,17 +26,21 @@ export const postChangePassword = async (req, res) => {
     const isSamePassword = await bcrypt.compare(oldPassword, password);
     if (!isSamePassword) {
         return res.status(400).render('change-password', { pageTitle: "비밀번호 변경", errorMessage: "현재 비밀번호가 일치하지 않습니다." });
-        //status 400 신호와 redering 하겠다.
     }
     const user = await User.findById(_id);
     user.password = newPassword;
-    await user.save();//db저장
+    await user.save();
     req.session.user.password = user.password;
     return res.redirect('/users/logout');
 }
 
-export const getEdit = (req, res) => {
-    return res.render('edit-profile', { pageTitle: "프로파일 업데이트" });
+export const getEdit = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id).populate("videos");
+    if (!user) {
+        return res.status(400).render('404', { pageTitle: "계정 오류" });
+    }
+    return res.render('edit-profile', { pageTitle: "프로파일 업데이트", user });
 }
 
 export const postEdit = async (req, res) => {
@@ -64,6 +56,7 @@ export const postEdit = async (req, res) => {
     if (userData.email !== email && isEmailExist) {
         return res.status(400).render('edit-profile', { pageTitle: "프로파일 업데이트", errorMessage: "이미 사용하고 있는 아이디 입니다." });
     }
+
     const updatedUser = await User.findByIdAndUpdate(_id, {
         avatarUrl: file ? file.path : avatarUrl,
         name,

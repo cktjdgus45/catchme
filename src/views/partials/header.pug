@@ -10,11 +10,9 @@ header
         ul                                     
             if loggedIn
                 li 
-                    a(href=`/users/${loggedInUser._id}/edit`) 프로필 편집
+                    a(href=`/users/${loggedInUser._id}/edit`) 내정보
                 li 
                     a(href="/users/logout") 로그아웃                        
-                li
-                    a(href=`/users/${loggedInUser._id}`) #{loggedInUser.name} 의 프로필
                 li
                     a(href="/videos/upload") 비디오업로드
             else 

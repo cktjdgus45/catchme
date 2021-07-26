@@ -13,6 +13,7 @@ module.exports = {
         //app: ['babel-polyfill', BASE_JS + "commentSection.js"],
         main: BASE_JS + "main.js",
         commentSection: BASE_JS + "commentSection.js",
+        profile: BASE_JS + "profile.js"
     },
     output: {
         filename: "js/[name].js",

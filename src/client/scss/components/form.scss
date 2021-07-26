@@ -1,4 +1,4 @@
-.auth__form{
+.auth__form,.upload__form{
     max-width: 500px;
     margin: 0 auto;
     display: flex;
@@ -26,5 +26,9 @@
         color: white;
     }
 }
-
+.upload__form{
+    label{
+        margin-bottom: 10px;
+    }
+}
 
