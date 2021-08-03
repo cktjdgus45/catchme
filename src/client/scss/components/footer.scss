@@ -12,11 +12,6 @@ footer{
     margin: 0 300px;
     border-top: 1px solid $--color-light-grey;
 }
-
-html,body{
-    height: 100%;
-}
-
 .wrapper{
     height: auto; //contents가 곧 height 100%능가하면 실행.
     min-height: 100%; //최소 100%

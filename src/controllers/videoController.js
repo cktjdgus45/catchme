@@ -10,6 +10,14 @@ export const home = async (req, res) => {
         console.log(error);
     }
 }
+
+export const single = async (req, res) => {
+    try {
+        return res.render('single', { pageTitle: "싱글페이지 작성" });
+    } catch (error) {
+        console.log(error);
+    }
+}
 export const search = async (req, res) => {
     const { keyword } = req.query;
     let videos = [];
