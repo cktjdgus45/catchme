@@ -1,9 +1,9 @@
-import multer from 'multer';  //npm install multer -> import -> 사용.
+import multer from 'multer';
 
 export const localsMiddleware = (req, res, next) => {
-    res.locals.loggedIn = Boolean(req.session.loggedIn);  //loggedIn으로 pug에서 사용가능하게됨.
+    res.locals.loggedIn = Boolean(req.session.loggedIn);
     res.locals.siteName = "Catch Me";
-    res.locals.loggedInUser = req.session.user || {};  //loggedInUser 에 session에 저장된 로그인유저정보 넣기.
+    res.locals.loggedInUser = req.session.user || {};
     next();
 }
 
@@ -28,6 +28,7 @@ export const avatarUpload = multer({
         fileSize: 3000000
     }
 });
+
 export const videoUpload = multer({
     dest: "uploads/videos/", limits: {
         fileSize: 20000000
