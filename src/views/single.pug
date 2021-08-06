@@ -10,28 +10,20 @@ html(lang='ko')
         meta(name="description" content="job conneting webiste for developer")
         meta(name="author" content="catchme team")
         script(type="module" src="/assets/js/singlePage.js" defer)
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.css" integrity="sha512-4rPgyv5iG0PZw8E+oRdfN/Gq+yilzt9rQ8Yci2jJ15rAyBmF0HBE4wFjBkoB72cxBeg63uobaj1UcNt/scV93w==" crossorigin="anonymous" referrerpolicy="no-referrer")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.js" integrity="sha512-gSf3NCgs6wWEdztl1e6vUqtRP884ONnCNzCpomdoQ0xXsk06lrxJsR7jX5yM/qAGkPGsps+4bLV5IEjhOZX+gg==" crossorigin="anonymous" referrerpolicy="no-referrer")
     body.single-body
-        button.btn 눌러
-        div.container 
+        div.header 
             .top-fixed 
                 div.logo
-                    div.logo
                 a(href="/",target="_blank",class="btn-gomain")
-            .section-wrapper
-                section
+        div#fullPage
+                .section 
                     div.content
                         div.cont-text
                             h2
                                 img(src="/img/maintext1.png", alt="그것이 무엇이든 다~있다!")
-                section
-                    div.content
-                        div.cont-text
-                            h2
-                                img(src="/img/maintext1.png", alt="그것이 무엇이든 다~있다!")
-                        p.cont-desc "3천만 이상이 선택한 배달의 민족,
-                        br
-                        p.cont-desc 업계 최다 배달가능 업소 보유 중!"
-                section
+                .section 
                     div.content
                         div.cont-text
                             h2
@@ -39,8 +31,7 @@ html(lang='ko')
                         p.cont-desc "3천만 이상이 선택한 배달의 민족,
                         br
                         p.cont-desc 업계 최다 배달가능 업소 보유 중!"
-                        div.human-img
-                section
+                .section 
                     div.content
                         div.cont-text
                             h2
@@ -49,7 +40,7 @@ html(lang='ko')
                         br
                         p.cont-desc 업계 최다 배달가능 업소 보유 중!"
                         div.human-img
-                section
+                .section 
                     div.content
                         div.cont-text
                             h2
@@ -58,7 +49,7 @@ html(lang='ko')
                         br
                         p.cont-desc 업계 최다 배달가능 업소 보유 중!"
                         div.human-img
-                section
+                .section
                     div.content
                         div.cont-text
                             h2
@@ -67,7 +58,7 @@ html(lang='ko')
                         br
                         p.cont-desc 업계 최다 배달가능 업소 보유 중!"
                         div.human-img
-                section
+                .section
                     div.content
                         div.cont-text
                             h2
@@ -76,7 +67,7 @@ html(lang='ko')
                         br
                         p.cont-desc 업계 최다 배달가능 업소 보유 중!"
                         div.human-img
-                section
+                .section
                     div.content
                         div.cont-text
                             h2
@@ -85,4 +76,13 @@ html(lang='ko')
                         br
                         p.cont-desc 업계 최다 배달가능 업소 보유 중!"
                         div.human-img
-        
+                .section
+                    div.content
+                        div.cont-text
+                            h2
+                                img(src="/img/maintext1.png", alt="그것이 무엇이든 다~있다!")
+                        p.cont-desc "3천만 이상이 선택한 배달의 민족,
+                        br
+                        p.cont-desc 업계 최다 배달가능 업소 보유 중!"
+                        div.human-img
+            

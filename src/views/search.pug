@@ -2,10 +2,6 @@ extends base.pug
 include mixins/video.pug
 
 block content 
-    form(method="get",action="/search").search__form
-        input(type="text",placeholder="검색",name="keyword")
-        button(type="submit").search__btn
-            i.fas.fa-search
     div.video-grid
         each video in videos 
             +video(video)
