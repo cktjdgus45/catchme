@@ -3,19 +3,26 @@ extends base.pug
 block content 
     video(src="/"+video.fileUrl,width="1000",height="500",controls=true,data-id=video._id)
     div
-        p=video.description
-        small Uploaded by
-            a(href=`/users/${video.owner._id}`) #{video.owner.name}
-    if String(video.owner._id) === String(loggedInUser._id)
-        a(href=`${video.id}/edit`) Edit Video &rarr;
-        br
-        a(href=`${video.id}/delete`) Delete Video &rarr;
-    hr
-    if loggedIn
-        div.video__add-comments 
-            form.video__comment-form#commentForm
-                textarea(cols="30",rows="10",placeholder="댓글 추가...")
-                button 댓글
+        button#play
+            i.fas.fa-play
+        button#mute
+            i.fas.fa-pause
+        span#time 00:00/00:00
+        input(type="range",min="0",max="1",step="0.1")#volume
+    //- div
+    //-     p=video.description
+    //-     small Uploaded by
+    //-         a(href=`/users/${video.owner._id}`) #{video.owner.name}
+    //- if String(video.owner._id) === String(loggedInUser._id)
+    //-     a(href=`${video.id}/edit`) Edit Video &rarr;
+    //-     br
+    //-     a(href=`${video.id}/delete`) Delete Video &rarr;
+    //- hr
+    //- if loggedIn
+    //-     div.video__add-comments 
+    //-         form.video__comment-form#commentForm
+    //-             textarea(cols="30",rows="10",placeholder="댓글 추가...")
+    //-             button 댓글
     div.video__comments
         ul 
             each comment in video.comments.reverse() 
@@ -32,4 +39,5 @@ block content
                         span.delBtn ❌
 block scripts
     script(src="/assets/js/commentSection.js") 
+    script(src="/assets/js/videoPlayer.js") 
 
