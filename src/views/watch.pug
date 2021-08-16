@@ -20,8 +20,15 @@ block content
         ul 
             each comment in video.comments.reverse() 
                 li(data-id=comment._id)
-                    span #{comment.text}
-                    if String(comment.owner)===String(loggedInUser._id)
+                    div.comment-box 
+                        div.commet-profile
+                            img(src=`${comment.owner.avatarUrl}`)
+                        div.comment-wrapper
+                            div.writer
+                                span=`${comment.owner.name}`
+                            div.content
+                                span=`${comment.text}`
+                    if String(comment.owner._id)===String(loggedInUser._id)
                         span.delBtn ❌
 block scripts
     script(src="/assets/js/commentSection.js") 

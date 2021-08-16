@@ -2,16 +2,29 @@ const form = document.getElementById('commentForm');  //pug에 있는 html태그
 const delBtns = document.querySelectorAll('.delBtn'); ////pug에 있는 html태그를 js에 가져옴.
 
 
-const addComment = (text, id) => {
+const addComment = (text, newCommentId, commentOwner) => {
     const videoComments = document.querySelector('.video__comments ul'); ////pug에 있는 html태그를 js에 가져옴.
     const newComment = document.createElement("li");  //html을 js를 통해 새로만듬.
-    newComment.dataset.id = id;
-    const span = document.createElement("span");
     const span2 = document.createElement("span");
-    span.innerText = `${text}`;
+    newComment.dataset.id = newCommentId;
     span2.innerText = '❌';
-    newComment.appendChild(span);
-    newComment.appendChild(span2);  // <li> <span>text</span> <span>❌</span> </li> 와동일.
+    newComment.appendChild(span2);
+    newComment.innerHTML = `
+    <div class="comment-box">
+        <div class="comment-profile">
+            <img src=${commentOwner.avatarUrl}>
+        </div>
+        <div class="comment-wrapper">
+            <div class="writer">
+                <span>${commentOwner.name}</span>
+            </div>
+            <div class="content">
+                <span>${text}</span>
+            </div>
+        </div>
+    </div>
+    `
+    newComment.appendChild(span2);
     videoComments.prepend(newComment);
     span2.addEventListener('click', handleDelete); // ❌ 가 클릭되면 handleDelete 실행.
 }
@@ -22,6 +35,7 @@ const handleDelete = async (event) => {
     const comment = delbtn.parentNode; // li 를 의미
     const videoComments = comment.parentNode;  //ul 을 의미.
     const commentId = comment.dataset.id;
+    console.log("11111");
     const response = await fetch(`/api/comments/${commentId}`, { //누르면 우리의 서버로 delete 리퀘스트를 보냄. 보내서 서버에서 처리하면서 데이터베이스업데이트하고 다시 res받음.)
         method: "DELETE",
     })
@@ -48,8 +62,8 @@ const handleSubmit = async (event) => {
     })
     textarea.value = "";
     if (response.status === 201) {
-        const { newCommentId } = await response.json();
-        addComment(text, newCommentId);
+        const { newCommentId, commentOwner } = await response.json();
+        addComment(text, newCommentId, commentOwner);
     }
 }
 
