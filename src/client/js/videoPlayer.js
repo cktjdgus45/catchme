@@ -6,6 +6,9 @@ const muteBtn = document.getElementById('mute');
 const time = document.getElementById('time');
 const volumeRange = document.getElementById('volume');
 
+let volumeValue = 0.5;
+video.volume = volumeValue;
+
 //video play pause
 const handlePlayClick = (e) => {
     if (video.paused) {
@@ -15,8 +18,9 @@ const handlePlayClick = (e) => {
     }
     playBtn.innerHTML = video.paused ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
 }
+playBtn.addEventListener('click', handlePlayClick);
 
-//video muted unmuted
+//video muted unmute
 const handleMute = (e) => {
     if (video.muted) {
         video.muted = false;
@@ -24,11 +28,22 @@ const handleMute = (e) => {
         video.muted = true;
     }
     muteBtn.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-    volumeRange.value = video.muted ? 0 : 0.5;
+    volumeRange.value = video.muted ? 0 : volumeValue;
+}
+muteBtn.addEventListener('click', handleMute);
+
+//video volume Range
+const handleVolumeChange = (event) => {
+    const { target: { value: volumeSize } } = event;
+    volumeValue = volumeSize;
+    video.volume = volumeSize;
+    if (video.muted) {
+        video.muted = false;
+        muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+    }
 }
 
-playBtn.addEventListener('click', handlePlayClick);
+volumeRange.addEventListener('input', handleVolumeChange);
 
 
-//video mute unmute
-muteBtn.addEventListener('click', handleMute);
+
