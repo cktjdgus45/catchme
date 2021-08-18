@@ -7,6 +7,7 @@ const time = document.getElementById('time');
 const volumeRange = document.getElementById('volume');
 const currentTime = document.getElementById('currentTime');
 const totalTime = document.getElementById('totalTime');
+const timeLine = document.getElementById('timeline');
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -18,7 +19,7 @@ const handlePlayClick = (e) => {
     } else {
         video.pause();
     }
-    playBtn.innerHTML = video.paused ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+    playBtn.innerHTML = video.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
 }
 playBtn.addEventListener('click', handlePlayClick);
 
@@ -49,16 +50,28 @@ volumeRange.addEventListener('input', handleVolumeChange);
 //time duration
 const handleLoadedMetadata = () => {
     totalTime.innerText = Math.floor(video.duration);
+    timeLine.max = Math.floor(video.duration);
 }
 
 const handleFormatTime = (seconds) => new Date(seconds * 1000).toISOString().substr(11, 8);
 
 const handleTimeUpdate = () => {
     currentTime.innerText = handleFormatTime(Math.floor(video.currentTime));
+    timeLine.value = Math.floor(video.currentTime);
 }
 
 video.addEventListener('loadedmetadata', handleLoadedMetadata);
 video.addEventListener('timeupdate', handleTimeUpdate);
+
+//timeLine
+
+const handleTimeLineChange = (event) => {
+    const { target: { value } } = event;
+    console.log(value);
+    video.currentTime = value;
+}
+
+timeLine.addEventListener('input', handleTimeLineChange);
 
 
 
