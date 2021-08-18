@@ -44,6 +44,7 @@ const handleVolumeChange = (event) => {
         video.muted = false;
         muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
     }
+    muteBtn.innerHTML = volumeSize == 0 ? '<i class="fas fa-volume-off"></i>' : '<i class="fas fa-volume-up"></i>';
 }
 volumeRange.addEventListener('input', handleVolumeChange);
 
@@ -52,25 +53,23 @@ const handleLoadedMetadata = () => {
     totalTime.innerText = Math.floor(video.duration);
     timeLine.max = Math.floor(video.duration);
 }
+video.addEventListener('loadedmetadata', handleLoadedMetadata);
 
 const handleFormatTime = (seconds) => new Date(seconds * 1000).toISOString().substr(11, 8);
-
 const handleTimeUpdate = () => {
     currentTime.innerText = handleFormatTime(Math.floor(video.currentTime));
     timeLine.value = Math.floor(video.currentTime);
+    if (video.ended) {
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
 }
-
-video.addEventListener('loadedmetadata', handleLoadedMetadata);
 video.addEventListener('timeupdate', handleTimeUpdate);
 
 //timeLine
-
 const handleTimeLineChange = (event) => {
     const { target: { value } } = event;
-    console.log(value);
     video.currentTime = value;
 }
-
 timeLine.addEventListener('input', handleTimeLineChange);
 
 
