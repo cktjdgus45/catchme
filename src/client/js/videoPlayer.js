@@ -51,8 +51,10 @@ const handleLoadedMetadata = () => {
     totalTime.innerText = Math.floor(video.duration);
 }
 
+const handleFormatTime = (seconds) => new Date(seconds * 1000).toISOString().substr(11, 8);
+
 const handleTimeUpdate = () => {
-    currentTime.innerText = Math.floor(video.currentTime);
+    currentTime.innerText = handleFormatTime(Math.floor(video.currentTime));
 }
 
 video.addEventListener('loadedmetadata', handleLoadedMetadata);
