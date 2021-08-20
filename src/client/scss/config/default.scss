@@ -16,7 +16,7 @@ a {
     color: inherit;
 }
 
-button,input[type="submit"]{
+button,input[type="submit"],input[type="range"]{
     cursor: pointer;
 }
 
@@ -24,21 +24,20 @@ button,input[type="submit"]{
 button,
 textarea,
 input {
-    // all: unset;
+    all: unset;
     font-size: 16px;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-    //border:none;
-    //background-color: #fff;
+    border:none;
 }
-// button:focus,
-// button:active,
-// textarea:focus,
-// textarea:active,
-// input:focus,
-// input:active {
-//     outline: none;
-//     box-shadow: none;
-// }
+button:focus,
+button:active,
+textarea:focus,
+textarea:active,
+input:focus,
+input:active {
+    outline: none;
+    box-shadow: none;
+}
 ul,
 ol,
 li {

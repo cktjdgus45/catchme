@@ -12,7 +12,7 @@ const fullScreenBtn = document.getElementById('fullScreen');
 const videoContainer = document.getElementById('videoContainer');
 const videoControls = document.getElementById('videoControls');
 
-let volumeValue = 0.5;
+let volumeValue = 1;
 let controlsTimeout = null;
 let controlsMove = null;
 video.volume = volumeValue;
@@ -55,14 +55,15 @@ volumeRange.addEventListener('input', handleVolumeChange);
 
 //time duration
 const handleLoadedMetadata = () => {
-    totalTime.innerText = Math.floor(video.duration);
+    currentTime.innerText = '00:00';
+    totalTime.innerText = `00:${Math.floor(video.duration)}`;
     timeLine.max = Math.floor(video.duration);
 }
 video.addEventListener('loadedmetadata', handleLoadedMetadata);
 
-const handleFormatTime = (seconds) => new Date(seconds * 1000).toISOString().substr(11, 8);
+const handleFormatTime = (seconds) => new Date(seconds * 1000).toISOString().substr(14, 5);
 const handleTimeUpdate = () => {
-    currentTime.innerText = handleFormatTime(Math.floor(video.currentTime));
+    currentTime.innerText = handleFormatTime(Math.ceil(video.currentTime));
     timeLine.value = Math.floor(video.currentTime);
     if (video.ended) {
         playBtn.innerHTML = '<i class="fas fa-play"></i>';
@@ -104,16 +105,16 @@ const handleMouseMove = () => {
         controlsMove = null;
     }
     videoControls.classList.add("showing");
-    controlsMove = setTimeout(() => { hideControls() }, 3000);
+    controlsMove = setTimeout(() => { hideControls() }, 2000);
 }
 const handleMouseLeave = () => {
     controlsTimeout = setTimeout(() => {
         hideControls();
-    }, 3000);
+    }, 2000);
 }
 
-video.addEventListener('mousemove', handleMouseMove);
-video.addEventListener('mouseleave', handleMouseLeave);
+videoContainer.addEventListener('mousemove', handleMouseMove);
+videoContainer.addEventListener('mouseleave', handleMouseLeave);
 
 
 

@@ -2,19 +2,21 @@ extends base.pug
 
 block content 
     div#videoContainer
-        video(src="/"+video.fileUrl,width="1000",height="500",data-id=video._id)
-        div#videoControls
-            button#play
-                i.fas.fa-play
-            button#mute
-                i.fas.fa-volume-up
-            input(type="range",min="0",max="1",step="0.1",value="0.5")#volume
-            div
-                span#currentTime 00:00
-                span /
-                span#totalTime 00:00
-            div
-                input(type="range",min="0",step="1",value="0")#timeline
+        video(src="/"+video.fileUrl,data-id=video._id)
+        div#videoControls.videoControls
+            div.videoControls__play
+                button#play.videoControls__playBtn
+                    i.fas.fa-play
+                div.videoControls__time
+                    span#currentTime
+                    span /
+                    span#totalTime 
+            div.videoControls__timebox
+                input(type="range",min="0",step="1",value="0")#timeline.videoControls__timeLine
+            div.videoControls__volume
+                button#mute
+                    i.fas.fa-volume-up
+                input(type="range",min="0",max="1",step="0.1",value="1")#volume
             div
                 button#fullScreen 
                     i.fas.fa-expand
