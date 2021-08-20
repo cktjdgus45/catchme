@@ -17,17 +17,6 @@ let controlsTimeout = null;
 let controlsMove = null;
 video.volume = volumeValue;
 
-//video play pause
-const handlePlayClick = (e) => {
-    if (video.paused) {
-        video.play();
-    } else {
-        video.pause();
-    }
-    playBtn.innerHTML = video.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
-}
-playBtn.addEventListener('click', handlePlayClick);
-
 //video muted unmute
 const handleMute = (e) => {
     if (video.muted) {
@@ -115,6 +104,35 @@ const handleMouseLeave = () => {
 
 videoContainer.addEventListener('mousemove', handleMouseMove);
 videoContainer.addEventListener('mouseleave', handleMouseLeave);
+//play
+const handleVideoPlay = () => {
+    if (video.paused) {
+        video.play();
+    } else {
+        video.pause();
+    }
+    playBtn.innerHTML = video.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+}
+//play when click video
+video.addEventListener('click', (event) => {
+    handleVideoPlay();
+})
+
+//play when click playBtn
+const handlePlayClick = (e) => {
+    handleVideoPlay();
+}
+playBtn.addEventListener('click', handlePlayClick);
+
+//play when press keyboard
+const handlePressKey = (e) => {
+    const pressedKey = e.code;
+    if (pressedKey === "Space") {
+        handlePlayClick();
+    }
+}
+document.addEventListener('keypress', handlePressKey);
+
 
 
 
