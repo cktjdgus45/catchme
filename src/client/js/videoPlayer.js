@@ -125,16 +125,15 @@ const handlePlayClick = (e) => {
 playBtn.addEventListener('click', handlePlayClick);
 
 //play when press keyboard
-// const handlePressKey = (e) => {
-//     const pressedKey = e.code;
-//     if (pressedKey === "Space") {
-//         handlePlayClick();
-//     }
-// }
-// document.addEventListener('keypress', handlePressKey);
+const handlePressKey = (e) => {
+    const pressedKey = e.code;
+    e.preventDefault();
+    if (pressedKey === "Space" && e.target.localName !== "textarea") {
+        handleVideoPlay();
+    }
+}
+document.addEventListener('keypress', handlePressKey);
 
-
-//버그발생 댓글에서 스페이스바를 누를떄 비디오가 재생이 되어버림. 수정 필.
 
 
 
