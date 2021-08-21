@@ -9,10 +9,11 @@ const addComment = (text, newCommentId, commentOwner) => {
     newComment.dataset.id = newCommentId;
     span2.innerText = '❌';
     newComment.appendChild(span2);
+    newComment.className = "comment";
     newComment.innerHTML = `
     <div class="comment-box">
         <div class="comment-profile">
-            <img src=${commentOwner.avatarUrl}>
+            <img class="profileImg" src=${commentOwner.avatarUrl}>
         </div>
         <div class="comment-wrapper">
             <div class="writer">
