@@ -9,6 +9,21 @@ export const logout = (req, res) => {
     return res.redirect('/');
 }
 
+export const see = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id).populate({
+      path: "videos",
+      populate: {
+        path: "owner",
+        model: "User",
+      },
+    });
+    if (!user) {
+      return res.status(404).render("404", { pageTitle: "User not found." });
+    }
+    return res.render("profile", {pageTitle: user.name,user});
+  };
+
 export const getChangePassword = (req, res) => {
     return res.render("change-password", { pageTitle: "비밀번호 변경" });
 }

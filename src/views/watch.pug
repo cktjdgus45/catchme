@@ -33,7 +33,7 @@ block content
             a(href=`${video.id}/delete`).videoUploader__access-btn-delete 동영상 삭제
     if loggedIn
         div.video__add-comments 
-            img(src=`${loggedInUser.avatarUrl}`).profileImg
+            img(src=`${loggedInUser.avatarUrl && loggedInUser.avatarUrl.startsWith('uploads') ? "/"+loggedInUser.avatarUrl : loggedInUser.avatarUrl}`).profileImg
             form.video__comment-form#commentForm
                 textarea(placeholder="댓글 추가...")
                 button.video__add-comments-btn 댓글
