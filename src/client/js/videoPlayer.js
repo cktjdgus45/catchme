@@ -127,12 +127,23 @@ playBtn.addEventListener('click', handlePlayClick);
 //play when press keyboard
 const handlePressKey = (e) => {
     const pressedKey = e.code;
-    e.preventDefault();
     if (pressedKey === "Space" && e.target.localName !== "textarea") {
+        e.preventDefault();
         handleVideoPlay();
     }
 }
 document.addEventListener('keypress', handlePressKey);
+
+//register view count
+
+const handleVideoEnded = async () => {
+    const { dataset: { id } } = video;
+    await fetch(`/api/videos/${id}/view`, {
+        method: "POST",
+    })
+}
+
+video.addEventListener('ended', handleVideoEnded);
 
 
 

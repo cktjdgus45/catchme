@@ -1,12 +1,14 @@
-.videoDescription{
+.videoTitle{
     margin-top: 30px;
     margin-bottom: 20px;
+    p{
+        font-size: $--font-regular;
+    }
 }
 
 .videoUploader{
-    padding: 30px 0px;
+    padding: 40px 0px;
     border-top: 1px solid $--color-black-opacity;
-    border-bottom: 1px solid $--color-black-opacity;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,6 +28,20 @@
           }
     }
 }
+.videoDescription{
+    border-bottom: 1px solid $--color-black-opacity;
+    padding-bottom: 40px;
+    width: inherit;
+    height: auto;
+    overflow-wrap: wrap;
+}
+
+.videoView{
+    margin-bottom: 20px;
+    color: $--color-grey;
+    font-size: $--font-micro;
+}
+
 .video__add-comments{
     display: flex;
     padding-top: 35px;
@@ -61,7 +77,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 30px;
+        margin: 30px 0px;
         width: inherit;
         .comment-box{
             display: flex;
