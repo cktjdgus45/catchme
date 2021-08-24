@@ -41,6 +41,7 @@ export const postUpload = async (req, res) => {
     const { _id } = req.session.user;
     const { path: fileUrl } = req.file;
     const { title, description, hashtags } = req.body;
+    console.log(description);
     try {
         const newVideo = await Video.create({
             title,
@@ -56,6 +57,7 @@ export const postUpload = async (req, res) => {
         const user = await User.findById(_id);
         user.videos.push(newVideo._id);
         user.save();
+        req.flash('success', '비디오가 업로드 되었습니다.');
         return res.redirect('/');
     } catch (error) {
         console.log(error);
@@ -80,6 +82,7 @@ export const getEdit = async (req, res) => {
         return res.status(404).render('404', { pageTitle: 'Video Not Found' });
     }
     if (String(video.owner) !== _id) {
+        req.flash('error', 'Not authorized');
         return res.status(403).redirect('/');
     }
     return res.render('editVideo', { pageTitle: `${video.title}`, video });
@@ -97,6 +100,7 @@ export const postEdit = async (req, res) => {
         return res.status(404).render("404", { pageTitle: "Video not found." });
     }
     if (String(video.owner) !== String(_id)) {
+        req.flash('error', '영상수정에 대한 권한이 없습니다');
         return res.status(403).redirect("/");
     }
     await Video.findByIdAndUpdate(id, {
@@ -105,6 +109,7 @@ export const postEdit = async (req, res) => {
         hashtags: Video.formatHashtags(hashtags),
         fileUrl
     });
+    req.flash('success', '성공적으로 영상이 업데이트 되었습니다.');
     return res.redirect(`/videos/${id}`);
 };
 
@@ -116,9 +121,11 @@ export const deleteVideo = async (req, res) => {
         return res.status(404).render('404', { pageTitle: 'Video Not Found' });
     }
     if (String(video.owner) !== _id) {
+        req.flash('error', 'Not authorized');
         return res.status(403).redirect('/');
     }
     await Video.findByIdAndDelete(id);
+    req.flash('info', '성공적으로 영상이 삭제 되었습니다.');
     return res.redirect('/');
 }
 
@@ -169,6 +176,7 @@ export const deleteComment = async (req, res) => {
         return res.sendStatus(404);
     }
     if (String(comment.owner) !== _id) {
+        req.flash('error', 'Not authorized');
         return res.status(403).redirect('/');
     }
     await Comment.findByIdAndDelete(id);

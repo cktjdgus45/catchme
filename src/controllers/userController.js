@@ -5,26 +5,31 @@ import fetch from 'node-fetch';
 
 
 export const logout = (req, res) => {
-    req.session.destroy();
+    req.flash('success', '성공적으로 로그아웃 되었습니다.');
+    setTimeout(() => req.session.destroy(), 1000);
     return res.redirect('/');
 }
 
 export const see = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id).populate({
-      path: "videos",
-      populate: {
-        path: "owner",
-        model: "User",
-      },
+        path: "videos",
+        populate: {
+            path: "owner",
+            model: "User",
+        },
     });
     if (!user) {
-      return res.status(404).render("404", { pageTitle: "User not found." });
+        return res.status(404).render("404", { pageTitle: "User not found." });
     }
-    return res.render("profile", {pageTitle: user.name,user});
-  };
+    return res.render("profile", { pageTitle: user.name, user });
+};
 
 export const getChangePassword = (req, res) => {
+    if (req.session.user.socialOnly === true) {
+        req.flash("error", "you're logged in with social Auth");
+        res.redirect('/');
+    }
     return res.render("change-password", { pageTitle: "비밀번호 변경" });
 }
 export const postChangePassword = async (req, res) => {
@@ -44,6 +49,7 @@ export const postChangePassword = async (req, res) => {
     }
     const user = await User.findById(_id);
     user.password = newPassword;
+    req.flash('success', '성공적으로 비밀번호가 변경되었습니다.');
     await user.save();
     req.session.user.password = user.password;
     return res.redirect('/users/logout');
@@ -79,6 +85,7 @@ export const postEdit = async (req, res) => {
         location
     }, { new: true });
     req.session.user = updatedUser;
+    req.flash('info', '성공적으로 업데이트 되었습니다.');
     return res.redirect('/');
 }
 
@@ -90,15 +97,17 @@ export const postLogin = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email, socialOnly: false });
     if (!user) {
+        req.flash('error', '존재하지 않는 아이디 입니다.');
         return res.status(400).render('login', { pageTitle, errorMessage: "존재하지 않는 아이디 입니다." });
     }
     const isSamePassword = await bcrypt.compare(password[1], user.password);
     if (!isSamePassword) {
+        req.flash('error', '틀린 비밀번호 입니다.');
         return res.status(400).render('login', { pageTitle, errorMessage: "틀린 비밀번호 입니다." });
     }
     req.session.loggedIn = true;
     req.session.user = user;
-
+    req.flash('info', '성공적으로 로그인 되었습니다.');
     return res.redirect('/');
 }
 
@@ -110,10 +119,12 @@ export const postJoin = async (req, res) => {
     const pageTitle = "계정 생성";
     const { email, password, password2, name, location } = req.body;
     if (password !== password2) {
+        req.flash('error', '입력하신 비밀번호가 일치하지 않습니다.');
         return res.status(400).render('join', { pageTitle, errorMessage: "입력하신 비밀번호가 일치하지 않습니다." });
     }
     const isEmailExist = await User.exists({ email });
     if (isEmailExist) {
+        req.flash('error', '이미 사용하고 있는 아이디 입니다.');
         return res.status(400).render('join', { pageTitle, errorMessage: "이미 사용하고 있는 아이디 입니다." });
     }
     try {
@@ -121,6 +132,7 @@ export const postJoin = async (req, res) => {
     } catch (error) {
         res.status(400).render('join', { pageTitle, errorMessage: error._message });
     }
+    req.flash('info', '성공적으로 회원가입 되었습니다.');
     return res.redirect('/login');
 }
 
@@ -179,8 +191,10 @@ export const finishNaverLogin = async (req, res) => {
         }
         user.avatarUrl = userData.profile_image;
         user.name = userData.name;
+        user.save();
         req.session.loggedIn = true;
         req.session.user = user;
+        req.flash('info', '성공적으로 로그인 되었습니다.');
         return res.redirect('/');
     } else {
         return res.redirect('/login');
@@ -244,8 +258,10 @@ export const finishGoogleLogin = async (req, res) => {
         }
         user.avatarUrl = userData.picture;
         user.name = userData.name;
+        user.save();
         req.session.loggedIn = true;
         req.session.user = user;
+        req.flash('info', '성공적으로 로그인 되었습니다.');
         return res.redirect('/');
     } else {
         return res.redirect('/login');
@@ -311,8 +327,10 @@ export const finishKakaoLogin = async (req, res) => {
         }
         user.avatarUrl = userData.profile_image_url;
         user.name = userData.nickname;
+        user.save();
         req.session.loggedIn = true;
         req.session.user = user;
+        req.flash('info', '성공적으로 로그인 되었습니다.');
         return res.redirect('/');
     } else {
         return res.redirect('/login');
@@ -376,8 +394,10 @@ export const finishGithubLogin = async (req, res) => {
         }
         user.avatarUrl = userData.avatar_url;
         user.name = userData.name;
+        user.save();
         req.session.loggedIn = true;
         req.session.user = user;
+        req.flash('info', '성공적으로 로그인 되었습니다.');
         return res.redirect('/');
     } else {
         return res.redirect('/login');

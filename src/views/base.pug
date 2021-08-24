@@ -1,3 +1,5 @@
+include mixins/messages
+
 doctype html 
 html(lang='ko')
     head 
@@ -6,6 +8,14 @@ html(lang='ko')
         link(rel="icon" href="/img/favicon.ico" type="image/icon")
         script(src="https://kit.fontawesome.com/920f3667b2.js" crossorigin="anonymous")
     body
+        if messages.error 
+            +message("error",messages.error)
+        if messages.info 
+            +message("info",messages.info)
+        if messages.success 
+            +message("success",messages.success)
+
+        
         div.wrapper
             include partials/header.pug 
             main 

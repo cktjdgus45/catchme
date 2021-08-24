@@ -29,4 +29,35 @@
 @import "./single/single.scss";
 
 
+//flash message
+@keyframes dissapear {
+    from{
+        transform: none;
+        opacity: 1;
+    }to{
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+}
+
+.message{
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: $--color-light-white;
+    width: 100%;
+    padding: 20px 0px;
+    animation: dissapear $--animation-duration ease-in-out forwards;
+    animation-delay: 2s;
+    &.error{
+        background-color: $--color-pink;
+    }
+    &.info{
+        background-color: $--color-main-blue;
+    }
+    &.success{
+        background-color: $--color-main-blue;
+    }
+}
 
