@@ -45,7 +45,7 @@ volumeRange.addEventListener('input', handleVolumeChange);
 //time duration
 const handleLoadedMetadata = () => {
     currentTime.innerText = '00:00';
-    totalTime.innerText = `00:${Math.floor(video.duration)}`;
+    totalTime.innerText = `00:${Math.floor(video.duration) < 10 ? `0${Math.ceil(video.duration)}` : `${Math.ceil(video.duration)}`}`;
     timeLine.max = Math.floor(video.duration);
 }
 video.addEventListener('loadedmetadata', handleLoadedMetadata);
