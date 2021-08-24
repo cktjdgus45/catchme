@@ -6,6 +6,5 @@ new fullpage('#fullPage', {
     navigation: true,
     showActiveTooltip: true,
     scrollingSpeed: 1000,
-    sectionsColor: ['', '#4BBFC3', '#7BAABE', '#cacccd', '#73aace', '#C5DFD3', '#25446B'],
 })
 
