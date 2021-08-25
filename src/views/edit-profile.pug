@@ -13,7 +13,9 @@ block content
         input(name="location",type="text",placeholder="위치",required,autocomplete="chrome-off",value=loggedInUser.location)    
         input(type="submit",value="업데이트")   
         if !loggedInUser.socialOnly  
-            a(href="change-password").profile__form-changepassword change password
+            div.profile__form-manage
+                a(href="change-password").profile__form-changepassword change password
+                a(href="leave-account").profile__form-leaveaccount leave account
     div.video-grid
         each video in user.videos
             +video(video)                        

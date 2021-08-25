@@ -32,6 +32,24 @@ export const getChangePassword = (req, res) => {
     }
     return res.render("change-password", { pageTitle: "비밀번호 변경" });
 }
+
+export const getLeaveAccount = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    const whatUserUpload = user.videos;
+    const a = Object.values(whatUserUpload);
+    let i;
+    for (i = 0; i < a.length; i++) {
+        console.log(i);
+        await Video.findByIdAndRemove(a[i]);
+    }
+    await User.findByIdAndRemove(id);
+    req.session.loggedIn = false;
+    req.session.user = {};
+    req.flash('success', '성공적으로 회원탈퇴 되었습니다.');
+    return res.redirect('/');
+}
+
 export const postChangePassword = async (req, res) => {
     const {
         session: {

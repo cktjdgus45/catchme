@@ -14,10 +14,13 @@
         cursor: pointer;
         margin-bottom: 15px;
     }
-    .profile__form-changepassword{
+    .profile__form-manage{
+        display: flex;
+    }
+    .profile__form-changepassword,.profile__form-leaveaccount{
         text-decoration: underline;
-        margin: 0 auto;
         margin-top: 20px;
+        margin-left: 10px;
         color: $--color-dark-grey;
         &:hover{
             color: $--color-main-blue;
