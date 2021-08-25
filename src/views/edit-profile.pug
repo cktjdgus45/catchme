@@ -16,16 +16,9 @@ block content
             a(href="change-password").profile__form-changepassword change password
     div.video-grid
         each video in user.videos
-            +video(video)            
-            +video(video)            
-            +video(video)            
-            +video(video)            
-            +video(video)            
-            +video(video)            
-            +video(video)            
-            +video(video)            
+            +video(video)                        
         else 
-            span.empty__message No videos found
+            span.empty__message 업로드한 비디오가 없습니다.
 block scripts
     script(src="/assets/js/profile.js")
         

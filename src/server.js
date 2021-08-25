@@ -25,9 +25,9 @@ app.use(session({
     store: MongoStore.create({ mongoUrl: process.env.DB_URL })
 }))
 
-app.use('/uploads', express.static("uploads"));
 app.use('/assets', express.static("assets"));
 app.use('/img', express.static("img"));
+app.use('/uploads', express.static("uploads"));
 
 app.use(flash());
 app.use(localsMiddleware);

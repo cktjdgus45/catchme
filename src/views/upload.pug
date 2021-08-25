@@ -6,6 +6,8 @@ block content
     form(method="POST",enctype="multipart/form-data").upload__form
         label(for="video") 비디오
         input(type="file",accept="video/*",required,id="video",name="video")
+        label(for="video") 미리보기 이미지
+        input(type="file",accept="thumb/*",required,id="thumb",name="thumb")
         input(placeholder="제목을 입력하세요",required,type="text",name="title",maxlength="50",autocomplete="off")
         textarea(placeholder="영상 소개",name="description").upload__form-description
         input(placeholder="콤마로 구분됨",maxlength="50",required,type="textarea",name="hashtags",autocomplete="off")
