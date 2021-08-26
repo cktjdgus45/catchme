@@ -12,7 +12,7 @@ module.exports = {
     entry: {
         main: BASE_JS + "main.js",
         commentSection: BASE_JS + "commentSection.js",
-        profile: BASE_JS + "profile.js",
+        preview: BASE_JS + "preview.js",
         singlePage: BASE_JS + "singlePage.js",
         videoPlayer: BASE_JS + "videoPlayer.js"
     },

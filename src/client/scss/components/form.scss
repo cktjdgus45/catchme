@@ -38,4 +38,33 @@
         margin-bottom: 10px;
     }
 }
+//edit-profile.pug
+.profile__form,.upload__form{
+    .input-image{
+        display: none;
+    }
+    .profile__form-avatar,.upload__form-img{
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        align-items: center;
+        justify-content: center;
+    }
+    img,span{
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+    .profile__form-manage{
+        display: flex;
+    }
+    .profile__form-changepassword,.profile__form-leaveaccount{
+        text-decoration: underline;
+        margin-top: 20px;
+        margin-left: 10px;
+        color: $--color-dark-grey;
+        &:hover{
+            color: $--color-main-blue;
+        } 
+    }
+}
 
