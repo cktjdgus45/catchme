@@ -37,10 +37,9 @@ export const getLeaveAccount = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id);
     const whatUserUpload = user.videos;
-    const a = Object.values(whatUserUpload);
+    const whatUserUploadArr = Object.values(whatUserUpload);
     let i;
-    for (i = 0; i < a.length; i++) {
-        console.log(i);
+    for (i = 0; i < whatUserUploadArr.length; i++) {
         await Video.findByIdAndRemove(a[i]);
     }
     await User.findByIdAndRemove(id);
