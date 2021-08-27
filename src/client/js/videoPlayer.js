@@ -11,6 +11,7 @@ const timeLine = document.getElementById('timeline');
 const fullScreenBtn = document.getElementById('fullScreen');
 const videoContainer = document.getElementById('videoContainer');
 const videoControls = document.getElementById('videoControls');
+const likeContainer = document.querySelector('.like');
 
 let volumeValue = 1;
 let controlsTimeout = null;
@@ -144,6 +145,52 @@ const handleVideoEnded = async () => {
 }
 
 video.addEventListener('ended', handleVideoEnded);
+
+//video like
+let liking = false;
+const addLikes = (likeCount) => {
+    if (liking) {
+        likeContainer.innerHTML = `
+            <i class="fas fa-thumbs-up like__clicked"></i>
+            <span>${likeCount}</span>
+        `;
+    } else {
+        likeContainer.innerHTML = `
+            <i class="fas fa-thumbs-up"></i>
+            <span>${likeCount}</span>
+        `;
+    }
+}
+
+const handleLikeClick = async () => {
+    const { dataset: { id } } = video;
+    if (!liking) {//liking =true
+        liking = true;
+        const response = await fetch(`/api/videos/${id}/like`, {
+            method: "POST",
+        })
+        if (response.status === 201) {
+            const { videoMeta } = await response.json();
+            const like = videoMeta.likes;
+            addLikes(like);
+        }
+    } else {//liking = false
+        liking = false;
+        const response2 = await fetch(`/api/videos/${id}/dislike`, {
+            method: "POST",
+        })
+        if (response2.status === 201) {
+            const { videoMeta } = await response2.json();
+            const like = videoMeta.likes;
+            addLikes(like);
+        }
+    }
+}
+
+
+likeContainer.addEventListener('click', handleLikeClick);
+
+
 
 
 

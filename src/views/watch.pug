@@ -24,6 +24,9 @@ block content
         p=video.title
     div.videoView
         p 조회수&nbsp&nbsp#{video.meta.views}회
+        div.like
+            i.fas.fa-thumbs-up
+            span.like-count #{video.meta.likes}
     div.videoUploader
         div.videoUploader__profile
             img(src=`${video.owner.avatarUrl}`).profileImg

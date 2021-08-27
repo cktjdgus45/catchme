@@ -37,9 +37,43 @@
 }
 
 .videoView{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
     color: $--color-grey;
     font-size: $--font-micro;
+    height: 50px;
+    .like{
+        cursor: pointer;
+        i{
+            position: relative;
+            margin-right: 5px;
+            &:hover{
+                &::after{
+                    animation: opacity $--animation-duration ease-in-out;
+                    content: '이 동영상이 마음에 듭니다.';
+                    background-color: $--color-grey;
+                    color: $--color-white;
+                    clear: both;
+                    width: 200px;
+                    padding: 10px 5px;
+                    border-radius: 5px;
+                    text-align: center;
+                    position: absolute;
+                    top: -40px;
+                    right: -40px;
+                }
+            }
+        }
+    }
+}
+@keyframes opacity {
+    from{
+        opacity: 0;
+    }to{
+        opacity: 1;
+    }
 }
 
 .video__add-comments{
@@ -106,4 +140,8 @@
     height: 50px;
     border-radius: 50%;
     margin-right: 15px;
+}
+
+.like__clicked{ //like clicked
+    color:$--color-main-blue;
 }

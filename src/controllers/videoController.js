@@ -193,3 +193,28 @@ export const registerView = async (req, res) => {
     await video.save();
     return res.sendStatus(200);
 }
+
+export const registerLike = async (req, res) => {
+    const { params: { id } } = req;
+    const video = await Video.findById(id);
+    if (!video) {
+        return res.sendStatus(404);
+    }
+    video.meta.likes = video.meta.likes + 1;
+    await video.save();
+    return res.status(201).json({
+        videoMeta: video.meta,
+    });
+}
+export const registerDislike = async (req, res) => {
+    const { params: { id } } = req;
+    const video = await Video.findById(id);
+    if (!video) {
+        return res.sendStatus(404);
+    }
+    video.meta.likes = video.meta.likes - 1;
+    await video.save();
+    return res.status(201).json({
+        videoMeta: video.meta,
+    });
+}
