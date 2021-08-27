@@ -47,8 +47,8 @@
     .like{
         cursor: pointer;
         i{
-            position: relative;
             margin-right: 5px;
+            position: relative;
             &:hover{
                 &::after{
                     animation: opacity $--animation-duration ease-in-out;

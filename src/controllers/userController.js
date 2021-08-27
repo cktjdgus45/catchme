@@ -7,6 +7,7 @@ import fetch from 'node-fetch';
 export const logout = (req, res) => {
     req.flash('success', '성공적으로 로그아웃 되었습니다.');
     setTimeout(() => req.session.destroy(), 1000);
+    req.session.loggedIn = false;
     return res.redirect('/');
 }
 
