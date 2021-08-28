@@ -1,6 +1,7 @@
 import Video from '../models/Video';
 import User from '../models/User';
 import Comment from '../models/Comment';
+import moment from 'moment';
 
 export const home = async (req, res) => {
     try {
@@ -71,9 +72,32 @@ export const watch = async (req, res) => {
     if (!video) {
         return res.status(404).render('404', { pageTitle: 'Video Not Found' });
     }
+    video.comments.forEach(comment => {
+        comment.createdAt = diff(comment.createdAt);
+    });
     return res.render('watch', { pageTitle: video.title, video });
 }
 
+const diff = (createdAt) => {
+    const nowArr = moment().format('YYYY-M-D-H-m-s').split('-'); //현재날짜배열
+    const currentTime = moment(nowArr); //댓글쓴시간 ==현재
+    const commentTime = moment(createdAt); //댓글이 쓰여진 시간
+    let cmTime = currentTime.diff(commentTime, 'seconds');
+    if (cmTime < 60) {
+        return cmTime = currentTime.diff(commentTime, 'seconds') + '초전';
+    }
+    else if (cmTime > 60 && cmTime <= 3600) {
+        return cmTime = currentTime.diff(commentTime, 'minutes') + '분전';
+    } else if (cmTime > 3600 && cmTime <= 86400) {
+        return cmTime = currentTime.diff(commentTime, 'hours') + '시간전';
+    } else if (cmTime > 86400 && cmTime <= 2772000) {
+        return cmTime = currentTime.diff(commentTime, 'days') + '일전';
+    } else if (cmTime > 2772000 && cmTime <= 31536000) {
+        return cmTime = currentTime.diff(commentTime, 'months') + '달전';
+    } else if (cmTime > 31536000) {
+        return cmTime = currentTime.diff(commentTime, 'years') + '년전';
+    }
+}
 export const getEdit = async (req, res) => {
     const { id } = req.params;
     const { user: { _id } } = req.session;
@@ -145,17 +169,23 @@ export const createComment = async (req, res) => {
     if (!video) {
         return res.sendStatus(404);
     }
+
+    const now = moment().format('YYYY-M-D-H-m-s'); //"2021-08-28-13-08-46"
+    const nowArr = now.split('-');
+
     const comment = await Comment.create({
         text,
         owner: _id,
         video: id,
+        createdAt: nowArr
     });
     video.comments.push(comment._id);
     video.save();
     const commentOwner = await Comment.findById(comment._id).populate({ path: 'owner' });
     return res.status(201).json({
         newCommentId: comment._id,
-        commentOwner: commentOwner.owner
+        commentOwner: commentOwner.owner,
+        createdAt: commentOwner.createdAt
     });
 }
 
