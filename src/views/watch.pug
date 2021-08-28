@@ -1,5 +1,6 @@
 extends base.pug
-
+block head 
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
 block content 
     div#videoContainer
         video(src="/"+video.fileUrl,data-id=video._id)
@@ -54,6 +55,7 @@ block content
                         div.comment-wrapper
                             div.writer
                                 span=`${comment.owner.name}`
+                                span=`${comment.createdAt}`
                             div.content
                                 span=`${comment.text}`
                     if String(comment.owner._id)===String(loggedInUser._id)
