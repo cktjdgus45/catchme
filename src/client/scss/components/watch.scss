@@ -119,8 +119,12 @@
         }
         .comment-wrapper{
             .writer{
-                font-weight: $--weight-semi-bold;
                 margin-bottom: 5px;
+                .write-time{
+                    margin-left: 7px;
+                    color: $--color-grey;
+                    font-size: 12px;
+                }
             }
             .content{
                 span{

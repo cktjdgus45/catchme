@@ -55,7 +55,7 @@ block content
                         div.comment-wrapper
                             div.writer
                                 span=`${comment.owner.name}`
-                                span=`${comment.createdAt}`
+                                span.write-time=`${comment.createdAt}`
                             div.content
                                 span=`${comment.text}`
                     if String(comment.owner._id)===String(loggedInUser._id)
