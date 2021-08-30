@@ -68,14 +68,26 @@ export const postUpload = async (req, res) => {
 
 export const watch = async (req, res) => {
     const { id } = req.params;
+    const { _id } = req.session.user;
     const video = await Video.findById(id).populate({ path: 'owner' }).populate({ path: 'comments', populate: { path: 'owner' } });
+    console.log(video);
     if (!video) {
         return res.status(404).render('404', { pageTitle: 'Video Not Found' });
     }
+    //comment time
     video.comments.forEach(comment => {
         comment.createdAt = diff(comment.createdAt);
     });
-    return res.render('watch', { pageTitle: video.title, video });
+    //liking or disliking?
+    let liking = false;
+    if (video.meta.likes.includes(_id)) {
+        //좋아요를 누른 상태
+        liking = true;
+    } else {
+        //좋아요를 누르지 않은 상태
+        liking = false;
+    }
+    return res.render('watch', { pageTitle: video.title, video, liking });
 }
 
 const diff = (createdAt) => {
@@ -223,27 +235,42 @@ export const registerView = async (req, res) => {
     await video.save();
     return res.sendStatus(200);
 }
-
+//todo
+//comments 등록부분 보면서 push save 하기.
 export const registerLike = async (req, res) => {
     const { params: { id } } = req;
+    const { user: { _id } } = req.session;
     const video = await Video.findById(id);
+    const user = await User.findById(_id);
     if (!video) {
         return res.sendStatus(404);
     }
-    video.meta.likes = video.meta.likes + 1;
-    await video.save();
+
+    if (!video.meta.likes.includes(user._id)) {//포함하고있지 않다면 추가,각유저씩1개만넣도록
+        video.meta.likes.push(user._id);
+        await video.save();
+    }
+    if (!user.likes.includes(video._id)) {
+        user.likes.push(video._id);
+        await user.save();
+    }
     return res.status(201).json({
         videoMeta: video.meta,
+        userLikes: user.likes
     });
 }
 export const registerDislike = async (req, res) => {
     const { params: { id } } = req;
+    const { user: { _id } } = req.session;
     const video = await Video.findById(id);
+    const user = await User.findById(_id);
     if (!video) {
         return res.sendStatus(404);
     }
-    video.meta.likes = video.meta.likes - 1;
+    video.meta.likes.pop(user._id);
     await video.save();
+    user.likes.pop(video._id);
+    await user.save();
     return res.status(201).json({
         videoMeta: video.meta,
     });

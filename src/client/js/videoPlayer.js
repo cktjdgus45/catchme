@@ -152,42 +152,45 @@ let liking = false;
 const addLikes = (likeCount) => {
     if (liking) {
         likeContainer.innerHTML = `
-            <i class="fas fa-thumbs-up like__clicked"></i>
+            <i class="fas fa-thumbs-up like__clicked liketrue"></i>
             <span>${likeCount}</span>
         `;
     } else {
         likeContainer.innerHTML = `
-            <i class="fas fa-thumbs-up"></i>
+            <i class="fas fa-thumbs-up likefalse"></i>
             <span>${likeCount}</span>
         `;
     }
 }
 
 const handleLikeClick = async () => {
+    const thumbs = document.querySelector('.fa-thumbs-up');
+    console.log(thumbs.classList);
     const { dataset: { id } } = video;
-    if (!liking) {//liking =true
-        liking = true;
-        const response = await fetch(`/api/videos/${id}/like`, {
+    if (thumbs.classList.contains('liketrue')) {
+        //좋아요를 누른 상태에서 다시 좋아요를 눌렀을떄
+        liking = false;
+        const disLikeResponse = await fetch(`/api/videos/${id}/dislike`, {
             method: "POST",
         })
-        if (response.status === 201) {
-            const { videoMeta } = await response.json();
-            const likeCount = videoMeta.likes;
+        if (disLikeResponse.status === 201) {
+            const { videoMeta } = await disLikeResponse.json();
+            const likeCount = videoMeta.likes.length;
             addLikes(likeCount);
         }
-    } else {//liking = false
-        liking = false;
-        const response2 = await fetch(`/api/videos/${id}/dislike`, {
+    } else {
+        //좋아요를 누르지 않은 상태에서 다시 좋아요를 눌렀을떄
+        liking = true;
+        const likeResponse = await fetch(`/api/videos/${id}/like`, {
             method: "POST",
         })
-        if (response2.status === 201) {
-            const { videoMeta } = await response2.json();
-            const likeCount = videoMeta.likes;
+        if (likeResponse.status === 201) {
+            const { videoMeta } = await likeResponse.json();
+            const likeCount = videoMeta.likes.length;
             addLikes(likeCount);
         }
     }
 }
-
 
 likeContainer.addEventListener('click', handleLikeClick);
 

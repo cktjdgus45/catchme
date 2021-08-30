@@ -50,19 +50,37 @@
             margin-right: 5px;
             position: relative;
             &:hover{
-                &::after{
-                    animation: opacity $--animation-duration ease-in-out;
-                    content: '이 동영상이 마음에 듭니다.';
-                    background-color: $--color-grey;
-                    color: $--color-white;
-                    clear: both;
-                    width: 200px;
-                    padding: 10px 5px;
-                    border-radius: 5px;
-                    text-align: center;
-                    position: absolute;
-                    top: -40px;
-                    right: -40px;
+                &.likefalse{
+                    &::after{
+                        animation: opacity $--animation-duration ease-in-out;
+                        content: '이 동영상이 마음에 듭니다.';
+                        background-color: $--color-grey;
+                        color: $--color-white;
+                        clear: both;
+                        width: 200px;
+                        padding: 10px 5px;
+                        border-radius: 5px;
+                        text-align: center;
+                        position: absolute;
+                        top: -40px;
+                        right: -40px;
+                    }
+                }
+                &.liketrue{
+                    &::after{
+                        animation: opacity $--animation-duration ease-in-out;
+                        content: '좋아요 취소.';
+                        background-color: $--color-grey;
+                        color: $--color-white;
+                        clear: both;
+                        width: 100px;
+                        padding: 10px 5px;
+                        border-radius: 5px;
+                        text-align: center;
+                        position: absolute;
+                        top: -40px;
+                        right: -40px;
+                    }
                 }
             }
         }
@@ -146,6 +164,9 @@
     margin-right: 15px;
 }
 
-.like__clicked{ //like clicked
+.like__clicked,.liketrue{ //like clicked,liking
     color:$--color-main-blue;
+}
+.likefalse{
+    color: $--color-grey;
 }
