@@ -148,6 +148,7 @@ video.addEventListener('ended', handleVideoEnded);
 
 //video like
 let liking = false;
+
 const addLikes = (likeCount) => {
     if (liking) {
         likeContainer.innerHTML = `
@@ -171,8 +172,8 @@ const handleLikeClick = async () => {
         })
         if (response.status === 201) {
             const { videoMeta } = await response.json();
-            const like = videoMeta.likes;
-            addLikes(like);
+            const likeCount = videoMeta.likes;
+            addLikes(likeCount);
         }
     } else {//liking = false
         liking = false;
@@ -181,8 +182,8 @@ const handleLikeClick = async () => {
         })
         if (response2.status === 201) {
             const { videoMeta } = await response2.json();
-            const like = videoMeta.likes;
-            addLikes(like);
+            const likeCount = videoMeta.likes;
+            addLikes(likeCount);
         }
     }
 }
