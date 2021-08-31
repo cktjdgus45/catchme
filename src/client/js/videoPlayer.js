@@ -165,7 +165,6 @@ const addLikes = (likeCount) => {
 
 const handleLikeClick = async () => {
     const thumbs = document.querySelector('.fa-thumbs-up');
-    console.log(thumbs.classList);
     const { dataset: { id } } = video;
     if (thumbs.classList.contains('liketrue')) {
         //좋아요를 누른 상태에서 다시 좋아요를 눌렀을떄
