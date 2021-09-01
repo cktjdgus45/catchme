@@ -68,9 +68,7 @@ export const postUpload = async (req, res) => {
 
 export const watch = async (req, res) => {
     const { id } = req.params;
-    const { _id } = req.session.user;
     const video = await Video.findById(id).populate({ path: 'owner' }).populate({ path: 'comments', populate: { path: 'owner' } });
-    console.log(video);
     if (!video) {
         return res.status(404).render('404', { pageTitle: 'Video Not Found' });
     }
@@ -78,14 +76,17 @@ export const watch = async (req, res) => {
     video.comments.forEach(comment => {
         comment.createdAt = diff(comment.createdAt);
     });
-    //liking or disliking?
     let liking = false;
-    if (video.meta.likes.includes(_id)) {
-        //좋아요를 누른 상태
-        liking = true;
-    } else {
-        //좋아요를 누르지 않은 상태
-        liking = false;
+    if (req.session.user) {
+        const { _id } = req.session.user;
+        //liking or disliking?
+        if (video.meta.likes.includes(_id)) {
+            //좋아요를 누른 상태
+            liking = true;
+        } else {
+            //좋아요를 누르지 않은 상태
+            liking = false;
+        }
     }
     return res.render('watch', { pageTitle: video.title, video, liking });
 }
@@ -238,6 +239,9 @@ export const registerView = async (req, res) => {
 //todo
 //comments 등록부분 보면서 push save 하기.
 export const registerLike = async (req, res) => {
+    if (!req.session) {
+        return;
+    }
     const { params: { id } } = req;
     const { user: { _id } } = req.session;
     const video = await Video.findById(id);
@@ -260,6 +264,9 @@ export const registerLike = async (req, res) => {
     });
 }
 export const registerDislike = async (req, res) => {
+    if (!req.session) {
+        return;
+    }
     const { params: { id } } = req;
     const { user: { _id } } = req.session;
     const video = await Video.findById(id);
