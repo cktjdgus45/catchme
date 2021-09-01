@@ -26,7 +26,7 @@ const addComment = (text, newCommentId, commentOwner, createdAt) => {
         <div class="comment-wrapper">
             <div class="writer">
                 <span>${commentOwner.name}</span>
-                <span>${cmTime}</span>
+                <span class="write-time">${cmTime}</span>
             </div>
             <div class="content">
                 <span>${text}</span>
