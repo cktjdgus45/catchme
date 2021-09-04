@@ -20,3 +20,6 @@ const inputImage = document.querySelector(".input-image")
 inputImage.addEventListener("change", e => {
     readImage(e.target)
 })
+
+
+
