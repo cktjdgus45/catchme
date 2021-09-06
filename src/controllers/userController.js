@@ -2,6 +2,7 @@ import User from '../models/User';
 import Video from '../models/Video';
 import bcrypt from 'bcrypt';
 import fetch from 'node-fetch';
+import axios from 'axios';
 
 
 export const logout = (req, res) => {
@@ -420,4 +421,27 @@ export const finishGithubLogin = async (req, res) => {
     } else {
         return res.redirect('/login');
     }
+}
+
+export const getNews = async (req, res) => {
+    const baseUrl = "https://openapi.naver.com/v1/search/news.json";
+    const urlConfig = {
+        query: "취업",
+        display: 20,
+        start: 20,
+        sort: "sim"
+    }
+    const params = new URLSearchParams(urlConfig).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    const config = {
+        method: 'get',
+        url: finalUrl,
+        headers: {
+            'X-Naver-Client-Id': process.env.NEWS_CLIENT,
+            'X-Naver-Client-Secret': process.env.NEWS_SECRET
+        }
+    };
+
+    const news = (await axios(config)).data.items;
+    return res.render('news', { pageTitle: "news", news });
 }

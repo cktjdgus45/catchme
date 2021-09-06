@@ -1,0 +1,9 @@
+extends base.pug
+include mixins/newsMixin
+
+block content
+    div.news
+        each content in news
+            +news(content)                      
+        else 
+            span.empty__message No videos Found

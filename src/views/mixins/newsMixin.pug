@@ -1,0 +1,8 @@
+mixin news(content)
+    a(href=`${content.link}` target="_blank").news-link
+        div.news-wrapper
+            div.news-mixin__data
+                span.news-mixin__title=content.title
+                span.news-mixin__date=content.pubDate
+            div.news-mixin__content
+                span.news-mixin__description=content.description
