@@ -1,26 +1,29 @@
-header 
-    a(href="/")
-        img(src="/img/logo.png").header__logo
-    if pageTitle === "Home"
-        form(method="GET",action="/search").search__form
-            input(type="text",placeholder="검색",name="keyword")
-            button(type="submit").search__btn
-                i.fas.fa-search
-    nav 
-        ul                                     
-            if loggedIn
-                li 
-                    a(href=`/users/${loggedInUser._id}/edit`) 내정보
-                li 
-                    a(href="/users/logout") 로그아웃                        
-                li
-                    a(href="/videos/upload") 비디오업로드
-                li 
-                    a(href="/news") 취업뉴스
-            else 
-                li 
-                    a(href="/login") 로그인
-                li 
-                    a(href="/join") 회원가입
-                li 
-                    a(href="/single") 메인페이지테스트                        
+header.container 
+    nav.navbar.has-shadow
+        div.navbar-brand 
+            a(href="/")
+                img(src="/img/logo.png" style="max-height:200px").header__logo
+            a.navbar-burger#burger
+                span
+                span
+                span
+        div.navbar-menu#nav-links 
+            div.navbar-end
+                if loggedIn
+                    a.navbar-item.has-text-centered(href=`/users/${loggedInUser._id}/edit`) 내정보
+                    a.navbar-item.has-text-centered(href="/users/logout") 로그아웃                        
+                    a.navbar-item.has-text-centered(href="/videos/upload") 비디오업로드
+                    a.navbar-item.has-text-centered(href="/news") 취업뉴스
+                else 
+                    a.navbar-item.has-text-centered(href="/login") 로그인
+                    a.navbar-item.has-text-centered(href="/join") 회원가입
+                    a.navbar-item.has-text-centered(href="/single") 메인페이지테스트
+            div.navbar-end
+                div.field.navbar-item
+                    if pageTitle === "Home"
+                    i.fas.fa-search.showSearchFrom
+                    form(method="GET",action="/search").search__form.contro.control.show
+                        input(type="text",placeholder="검색",name="keyword").input  
+
+                    
+                                    

@@ -2,10 +2,16 @@ extends base.pug
 include mixins/video
 
 block content
-    h1.is-size-1.is-uppercase hello bulma
-    h2.is-size-2.is-uppercase hello bulma
-    h3.is-size-3.is-uppercase hello bulma
-    h4.is-size-7.is-uppercase hello bulma
+    .container
+        .columns.is-vcentered
+            .column.has-text-centered
+                h1 video1 
+            .column.has-text-centered
+                h2 video2 
+            .column.has-text-centered
+                h3 video3 
+            .column.has-text-centered
+                h4 video4
     div.video-grid
         each video in videos
             +video(video)                      

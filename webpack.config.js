@@ -14,7 +14,8 @@ module.exports = {
         commentSection: BASE_JS + "commentSection.js",
         preview: BASE_JS + "preview.js",
         singlePage: BASE_JS + "singlePage.js",
-        videoPlayer: BASE_JS + "videoPlayer.js"
+        videoPlayer: BASE_JS + "videoPlayer.js",
+        bulma: BASE_JS + "bulma.js"
     },
     output: {
         filename: "js/[name].js",
