@@ -2,6 +2,7 @@ extends base.pug
 include mixins/video
 
 block content
+    
     .container
         .columns.is-vcentered
             .column.has-text-centered
@@ -14,6 +15,9 @@ block content
                 h4 video4
     div.video-grid
         each video in videos
-            +video(video)                      
-        else 
-            span.empty__message No videos Found
+            +video(video)     
+
+
+
+        //- else 
+        //-     span.empty__message No videos Found
