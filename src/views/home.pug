@@ -2,22 +2,10 @@ extends base.pug
 include mixins/video
 
 block content
-    
+    - let n = 0;
     .container
-        .columns.is-vcentered
-            .column.has-text-centered
-                h1 video1 
-            .column.has-text-centered
-                h2 video2 
-            .column.has-text-centered
-                h3 video3 
-            .column.has-text-centered
-                h4 video4
-    div.video-grid
-        each video in videos
-            +video(video)     
-
-
-
-        //- else 
-        //-     span.empty__message No videos Found
+        .columns.is-vcentered.is-multiline
+            while n < videos.length
+                .column.is-one-quarter
+                    +video(videos[n])
+                - n=n+1;
