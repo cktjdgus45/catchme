@@ -4,7 +4,7 @@
 @import "./config/_variable";
 @import "./config/_reset";
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
-
+@import "./config/bulmaoverride.scss";
 //Default
 @import "./config/default.scss";
 
@@ -64,4 +64,3 @@
         background-color: $--color-main-blue;
     }
 }
-

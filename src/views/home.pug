@@ -3,9 +3,8 @@ include mixins/video
 
 block content
     - let n = 0;
-    .container
-        .columns.is-vcentered.is-multiline
-            while n < videos.length
-                .column.is-one-quarter
-                    +video(videos[n])
-                - n=n+1;
+    .columns.is-vcentered.is-multiline
+        while n < videos.length
+            .column.is-one-quarter
+                +video(videos[n])
+            - n=n+1;
