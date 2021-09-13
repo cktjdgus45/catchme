@@ -1,6 +1,15 @@
 footer{
-    .content{
-        display: flex;
-        justify-content: space-between;
+    display: flex;
+    justify-content: space-around;
+    p{
+        line-height: 1.5rem;
     }
+}
+
+//bulma footer
+
+.footer{
+    padding: 0;
+    background-color: $--color-main-blue;
+    color: $--color-white;
 }

@@ -14,11 +14,16 @@ a.navbar-item{
         color :inherit;
         background-color: transparent;
         text-decoration: none;
+        background-color: hsl(206, 70%, 96%)
     }
 }
 @media screen and (min-width: 1024px){
-    .navbar-start{
+    .navbar-end{
         align-items: center;
     }
+}
+
+body, button, input, optgroup, select, textarea{
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
 
