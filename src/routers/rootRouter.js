@@ -5,9 +5,9 @@ import { publicOnlyMiddleware } from '../localsMiddleware';
 
 const rootRouter = express.Router();
 
-rootRouter.get('/', home);
+rootRouter.get('/home', home);
 rootRouter.get('/search', search);
-rootRouter.get('/single', single);
+rootRouter.get('/', single);
 rootRouter.get('/news', getNews);
 rootRouter.route('/login').all(publicOnlyMiddleware).get(getLogin).post(postLogin);
 rootRouter.route('/join').all(publicOnlyMiddleware).get(getJoin).post(postJoin);

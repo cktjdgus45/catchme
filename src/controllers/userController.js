@@ -9,7 +9,7 @@ export const logout = (req, res) => {
     req.flash('success', '성공적으로 로그아웃 되었습니다.');
     setTimeout(() => req.session.destroy(), 1000);
     req.session.loggedIn = false;
-    return res.redirect('/');
+    return res.redirect('/home');
 }
 
 export const see = async (req, res) => {
@@ -30,7 +30,7 @@ export const see = async (req, res) => {
 export const getChangePassword = (req, res) => {
     if (req.session.user.socialOnly === true) {
         req.flash("error", "you're logged in with social Auth");
-        res.redirect('/');
+        res.redirect('/home');
     }
     return res.render("change-password", { pageTitle: "비밀번호 변경" });
 }
@@ -48,7 +48,7 @@ export const getLeaveAccount = async (req, res) => {
     req.session.loggedIn = false;
     req.session.user = {};
     req.flash('success', '성공적으로 회원탈퇴 되었습니다.');
-    return res.redirect('/');
+    return res.redirect('/home');
 }
 
 export const postChangePassword = async (req, res) => {
@@ -71,7 +71,7 @@ export const postChangePassword = async (req, res) => {
     req.flash('success', '성공적으로 비밀번호가 변경되었습니다.');
     await user.save();
     req.session.user.password = user.password;
-    return res.redirect('/');
+    return res.redirect('/home');
 }
 
 export const getEdit = async (req, res) => {
@@ -105,7 +105,7 @@ export const postEdit = async (req, res) => {
     }, { new: true });
     req.session.user = updatedUser;
     req.flash('info', '성공적으로 업데이트 되었습니다.');
-    return res.redirect('/');
+    return res.redirect('/home');
 }
 
 export const getLogin = (req, res) => {
@@ -127,7 +127,7 @@ export const postLogin = async (req, res) => {
     req.session.loggedIn = true;
     req.session.user = user;
     req.flash('info', '성공적으로 로그인 되었습니다.');
-    return res.redirect('/');
+    return res.redirect('/home');
 }
 
 export const getJoin = (req, res) => {
@@ -214,7 +214,7 @@ export const finishNaverLogin = async (req, res) => {
         req.session.loggedIn = true;
         req.session.user = user;
         req.flash('info', '성공적으로 로그인 되었습니다.');
-        return res.redirect('/');
+        return res.redirect('/home');
     } else {
         return res.redirect('/login');
     }
@@ -281,7 +281,7 @@ export const finishGoogleLogin = async (req, res) => {
         req.session.loggedIn = true;
         req.session.user = user;
         req.flash('info', '성공적으로 로그인 되었습니다.');
-        return res.redirect('/');
+        return res.redirect('/home');
     } else {
         return res.redirect('/login');
     }
@@ -350,7 +350,7 @@ export const finishKakaoLogin = async (req, res) => {
         req.session.loggedIn = true;
         req.session.user = user;
         req.flash('info', '성공적으로 로그인 되었습니다.');
-        return res.redirect('/');
+        return res.redirect('/home');
     } else {
         return res.redirect('/login');
     }
@@ -417,7 +417,7 @@ export const finishGithubLogin = async (req, res) => {
         req.session.loggedIn = true;
         req.session.user = user;
         req.flash('info', '성공적으로 로그인 되었습니다.');
-        return res.redirect('/');
+        return res.redirect('/home');
     } else {
         return res.redirect('/login');
     }

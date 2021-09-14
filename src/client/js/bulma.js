@@ -4,7 +4,6 @@ const searchBtn = document.querySelector('.showSearchFrom');
 const searchForm = document.querySelector('.search__form');
 
 searchBtn.addEventListener('click', () => {
-    console.log('clicked');
     searchForm.classList.toggle('show');
 })
 

@@ -59,7 +59,7 @@ export const postUpload = async (req, res) => {
         user.videos.push(newVideo._id);
         user.save();
         req.flash('success', '비디오가 업로드 되었습니다.');
-        return res.redirect('/');
+        return res.redirect('/home');
     } catch (error) {
         console.log(error);
         return res.render('upload', { pageTitle: "비디오 업로드", errorMessage: error._message });
@@ -120,7 +120,7 @@ export const getEdit = async (req, res) => {
     }
     if (String(video.owner) !== _id) {
         req.flash('error', 'Not authorized');
-        return res.status(403).redirect('/');
+        return res.status(403).redirect('/home');
     }
     return res.render('editVideo', { pageTitle: `${video.title}`, video });
 }
@@ -138,7 +138,7 @@ export const postEdit = async (req, res) => {
     }
     if (String(video.owner) !== String(_id)) {
         req.flash('error', '영상수정에 대한 권한이 없습니다');
-        return res.status(403).redirect("/");
+        return res.status(403).redirect("/home");
     }
     await Video.findByIdAndUpdate(id, {
         title,
@@ -159,11 +159,11 @@ export const deleteVideo = async (req, res) => {
     }
     if (String(video.owner) !== _id) {
         req.flash('error', 'Not authorized');
-        return res.status(403).redirect('/');
+        return res.status(403).redirect('/home');
     }
     await Video.findByIdAndDelete(id);
     req.flash('info', '성공적으로 영상이 삭제 되었습니다.');
-    return res.redirect('/');
+    return res.redirect('/home');
 }
 
 export const createComment = async (req, res) => {
@@ -220,7 +220,7 @@ export const deleteComment = async (req, res) => {
     }
     if (String(comment.owner) !== _id) {
         req.flash('error', 'Not authorized');
-        return res.status(403).redirect('/');
+        return res.status(403).redirect('/home');
     }
     await Comment.findByIdAndDelete(id);
     return res.sendStatus(201);
