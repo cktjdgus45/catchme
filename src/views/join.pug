@@ -5,36 +5,36 @@ block content
     form(method="POST",autocomplete="off").auth__form
         .field 
             p.control.has-icons-left
-                input.input(name="email",type="email",placeholder="아이디(이메일)",required,autocomplete="off",autocapitalize="off")
+                input.input.is-large(name="email",type="email",placeholder="아이디(이메일)",required,autocomplete="off",autocapitalize="off")
                 span.icon.is-small.is-left
                     i.fas.fa-envelope 
 
         .field 
             p.control.has-icons-left
-                input.input(name="password",type="password",placeholder="비밀번호",required,autocomplete="new-password")
+                input.input.is-large(name="password",type="password",placeholder="비밀번호",required,autocomplete="new-password")
                 span.icon.is-small.is-left
                     i.fas.fa-lock 
 
         .field 
             p.control.has-icons-left
-                input.input(name="password2",type="password",placeholder="비밀번호 재입력",required,autocomplete="new-password")
+                input.input.is-large(name="password2",type="password",placeholder="비밀번호 재입력",required,autocomplete="new-password")
                 span.icon.is-small.is-left
                     i.fas.fa-key 
 
         .field 
             p.control.has-icons-left
-                input.input(name="name",type="text",placeholder="이름",required,autocomplete="chrome-off")
+                input.input.is-large(name="name",type="text",placeholder="이름",required,autocomplete="chrome-off")
                 span.icon.is-small.is-left
                     i.fas.fa-user 
 
         .field 
             p.control.has-icons-left
-                input.input(name="location",type="text",placeholder="위치",required,autocomplete="chrome-off")
+                input.input.is-large(name="location",type="text",placeholder="위치",required,autocomplete="chrome-off")
                 span.icon.is-small.is-left
                     i.fas.fa-location-arrow 
         .field 
             p.control 
-                input.button(type="submit",value="회원가입")      
+                input.button.is-large(type="submit",value="회원가입")      
     div.social__auth
         h3.social__auth-devider
             span or sign in with

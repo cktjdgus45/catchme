@@ -34,3 +34,7 @@ body, button, input, optgroup, select, textarea{
 .title:not(:last-child){
     margin-bottom: 6.5rem;
 }
+
+.input{
+    max-width: 80%;
+}
