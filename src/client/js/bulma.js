@@ -3,8 +3,6 @@ const navbarMenu = document.querySelector('#nav-links');
 const searchBtn = document.querySelector('.showSearchFrom');
 const searchForm = document.querySelector('.search__form');
 
-console.log(searchBtn, searchForm)
-
 searchBtn.addEventListener('click', () => {
     console.log('clicked');
     searchForm.classList.toggle('show');

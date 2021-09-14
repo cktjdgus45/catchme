@@ -1,6 +1,7 @@
 extends base.pug
 include mixins/video
-
+block head 
+    script(defer src="/assets/js/bulma.js")
 block content
     - let n = 0;
     .columns.is-vcentered.is-multiline
