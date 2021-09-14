@@ -30,3 +30,7 @@ body, button, input, optgroup, select, textarea{
 .control.has-icons-left .icon{
     height: 2.7em;
 }
+
+.title:not(:last-child){
+    margin-bottom: 6.5rem;
+}
