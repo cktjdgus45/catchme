@@ -2,8 +2,12 @@ extends base.pug
 include mixins/newsMixin
 
 block content
-    div.news
-        each content in news
-            +news(content)                      
-        else 
-            span.empty__message No videos Found
+    h1.title.is-1.has-text-grey.auth-title 
+        i.fas.fa-kiwi-bird 
+        span NEWS
+    - let n = 0;
+    .columns.is-vcentered.is-multiline
+        while n < news.length
+            .column.is-one-quarter
+                +news(news[n])
+            - n=n+1;

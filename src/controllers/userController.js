@@ -427,9 +427,7 @@ export const getNews = async (req, res) => {
     const baseUrl = "https://openapi.naver.com/v1/search/news.json";
     const urlConfig = {
         query: "취업",
-        display: 20,
-        start: 20,
-        sort: "sim"
+        display: 16,
     }
     const params = new URLSearchParams(urlConfig).toString();
     const finalUrl = `${baseUrl}?${params}`;

@@ -3,6 +3,7 @@ mixin news(content)
         div.news-wrapper
             div.news-mixin__data
                 span.news-mixin__title=content.title
+            div.news-date
                 span.news-mixin__date 게시날짜 : #{content.pubDate}
             div.news-mixin__content
                 span.news-mixin__description=content.description

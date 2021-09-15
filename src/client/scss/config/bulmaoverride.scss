@@ -12,7 +12,8 @@
 
 a.navbar-item{
     &:hover{
-        color :inherit;
+        color :$--color-main-blue;
+        font-weight: $--weight-semi-bold;
         background-color: transparent;
         text-decoration: none;
     }
