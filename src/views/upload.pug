@@ -1,18 +1,17 @@
 extends base.pug
 
 block content
-    if errorMessage 
-        span=errorMessage
+    h1.title.is-1.has-text-grey.auth-title VIDEO UPLOAD
     form(method="POST",enctype="multipart/form-data").upload__form
-        label(for="thumb").upload__form-img
+        label(for="thumb").upload__form-img.label
             img(src="/img/uploadImg.png",width="100",height="100")#preview-image
             span 미리보기 이미지
             input(type="file",accept="image/*",required,id="thumb",name="thumb").input-image
-        label(for="video") video
-        input(type="file",accept="video/*",required,id="video",name="video")
-        input(placeholder="제목을 입력하세요",required,type="text",name="title",maxlength="50",autocomplete="off")
-        textarea(placeholder="영상 소개",name="description").upload__form-description
-        input(placeholder="콤마로 구분됨",maxlength="50",required,type="textarea",name="hashtags",autocomplete="off")
-        input(value="영상 업로드", type="submit")
+        label(for="video").label video
+        input.input.is-medium(type="file",accept="video/*",required,id="video",name="video")
+        input.input.is-medium(placeholder="제목을 입력하세요",required,type="text",name="title",maxlength="50",autocomplete="off")
+        textarea.input.is-normal(placeholder="영상 소개",name="description").upload__form-description
+        input.input.is-medium(placeholder="콤마로 구분됨",maxlength="50",required,type="textarea",name="hashtags",autocomplete="off")
+        input.button.is-large(value="영상 업로드", type="submit")
 block scripts
     script(src="/assets/js/preview.js")
