@@ -1,29 +1,36 @@
 header.container
     nav.navbar.has-shadow
         div.navbar-brand 
-            a(href="/")
+            a(href="/home")
                 img(src="/img/logo.png" ).header__logo
             a.navbar-burger#burger
                 span
                 span
                 span
         div.navbar-menu#nav-links.is-size-4
-            div.navbar-end.has-text-weight-medium
+            div.navbar-end.has-text-weight-medium.has-text-centered
                 if loggedIn
-                    a.navbar-item.has-text-centered(href=`/users/${loggedInUser._id}/edit`) 내정보
-                    a.navbar-item.has-text-centered(href="/users/logout") 로그아웃                        
                     a.navbar-item.has-text-centered(href="/videos/upload") 비디오업로드
                     a.navbar-item.has-text-centered(href="/news") 취업뉴스
-                else 
-                    a.navbar-item.has-text-centered(href="/login") 로그인
-                    a.navbar-item.has-text-centered(href="/join") 회원가입
-                    a.navbar-item.has-text-centered(href="/single") 메인페이지테스트
             div.navbar-end
                 div.field.navbar-item
                     if pageTitle === "Home"
-                        i.fas.fa-search.showSearchFrom
                         form(method="GET",action="/search").search__form.control.show
-                            input(type="text",placeholder="검색",name="keyword").input  
-
-                    
-                                    
+                            input(type="text",placeholder="검색",name="keyword").input.is-large 
+                        i.fas.fa-search.showSearchFrom
+                    if !loggedIn
+                        a.navbar-item.has-background-info-light.loginBtn.has-text-centered(href="/login") 로그인
+                    else 
+                        .dropdown
+                            .dropdown-trigger
+                                button.button(aria-haspopup='true' aria-controls='dropdown-menu5')
+                                    img.user-avatar(src=`${loggedInUser.avatarUrl}`)
+                                    span.user-name #{loggedInUser.name}
+                                    span.icon.is-small
+                                        i.fas.fa-angle-down(aria-hidden='true')
+                            #dropdown-menu5.dropdown-menu(role='menu')
+                                .dropdown-content
+                                    .dropdown-item
+                                        a.navbar-item.has-text-centered(href=`/users/${loggedInUser._id}/edit`) 내정보
+                                    .dropdown-item
+                                        a.navbar-item.has-text-centered(href="/users/logout") 로그아웃                        

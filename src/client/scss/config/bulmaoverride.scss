@@ -14,7 +14,6 @@ a.navbar-item{
         color :inherit;
         background-color: transparent;
         text-decoration: none;
-        background-color: hsl(206, 70%, 96%)
     }
 }
 @media screen and (min-width: 1024px){
@@ -37,4 +36,8 @@ body, button, input, optgroup, select, textarea{
 
 .input{
     max-width: 80%;
+}
+
+.button:focus:not(:active){
+    box-shadow: none ;
 }
