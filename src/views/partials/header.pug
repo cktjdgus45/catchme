@@ -20,7 +20,7 @@ header.container
                         i.fas.fa-search.showSearchFrom
                     if !loggedIn
                         a.navbar-item.has-background-info-light.loginBtn.has-text-centered(href="/login") 로그인
-                    else 
+                    if loggedIn 
                         .dropdown
                             .dropdown-trigger
                                 button.button(aria-haspopup='true' aria-controls='dropdown-menu5')

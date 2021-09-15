@@ -4,17 +4,25 @@ const searchBtn = document.querySelector('.showSearchFrom');
 const searchForm = document.querySelector('.search__form');
 const userInfo = document.querySelector('.dropdown');
 
+
 //searchBtn - header
-searchBtn.addEventListener('click', () => {
-    searchForm.classList.toggle('show');
-})
+if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+        searchForm.classList.toggle('show');
+    })
+}
 
 //burgerIcon - reactive web
-burgerIcon.addEventListener('click', () => {
-    navbarMenu.classList.toggle('is-active');
-})
+if (burgerIcon) {
+    burgerIcon.addEventListener('click', () => {
+        navbarMenu.classList.toggle('is-active');
+    })
+}
 
 //user info - header
-userInfo.addEventListener('click', () => {
-    userInfo.classList.toggle('is-active');
-})
+if (userInfo) {
+    userInfo.addEventListener('click', () => {
+        userInfo.classList.toggle('is-active');
+    })
+}
+
