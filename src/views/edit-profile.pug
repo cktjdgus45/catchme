@@ -2,7 +2,9 @@ extends base.pug
 include mixins/video
 
 block content
-    h1.title.is-1.has-text-grey.auth-title 프로파일
+    h1.title.is-1.has-text-grey.auth-title 
+        i.fas.fa-user 
+        span 프로파일
     form(method="POST",enctype="multipart/form-data").auth__form.profile__form
         label(for="avatar").profile__form-avatar
             img(src=`${loggedInUser.avatarUrl && loggedInUser.avatarUrl.startsWith('uploads') ? "/"+loggedInUser.avatarUrl : loggedInUser.avatarUrl}`,width="100",height="100")#preview-image

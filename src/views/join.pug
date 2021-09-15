@@ -1,7 +1,9 @@
 extends base.pug
 
 block content 
-    h1.title.is-1.has-text-grey.auth-title JOIN
+    h1.title.is-1.has-text-grey.auth-title 
+        i.fas.fa-user 
+        span JOIN
     form(method="POST",autocomplete="off").auth__form
         .field 
             p.control.has-icons-left

@@ -1,13 +1,15 @@
 extends base.pug
 
 block content
-    h1.title.is-1.has-text-grey.auth-title VIDEO UPLOAD
+    h1.title.is-1.has-text-grey.auth-title 
+        i.fas.fa-cloud-upload-alt
+        span VIDEO UPLOAD
     form(method="POST",enctype="multipart/form-data").upload__form
         label(for="thumb").upload__form-img.label
             img(src="/img/uploadImg.png",width="100",height="100")#preview-image
             span 미리보기 이미지
             input(type="file",accept="image/*",required,id="thumb",name="thumb").input-image
-        label(for="video").label video
+        label(for="video").label 동영상
         input.input.is-medium(type="file",accept="video/*",required,id="video",name="video")
         input.input.is-medium(placeholder="제목을 입력하세요",required,type="text",name="title",maxlength="50",autocomplete="off")
         textarea.input.is-normal(placeholder="영상 소개",name="description").upload__form-description
