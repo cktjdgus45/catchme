@@ -1,10 +1,29 @@
 extends base.pug
 include mixins/video
 
-block content
+block head
+    link(rel="stylesheet", href="https://unpkg.com/swiper@7/swiper-bundle.min.css")
+block content        
+    .swiper 
+        .swiper-wrapper 
+            .swiper-slide
+                img(src="/img/1.png", alt="그것이 무엇이든 다~있다!")
+            .swiper-slide 
+                img(src="/img/2.png", alt="그것이 무엇이든 다~있다!")
+            .swiper-slide
+                img(src="/img/3.png", alt="그것이 무엇이든 다~있다!")
+        .swiper-pagination 
+        .swiper-button-prev            
+        .swiper-button-next 
     - let n = 0;
     .columns.is-vcentered.is-multiline
         while n < videos.length
             .column.is-one-quarter
                 +video(videos[n])
             - n=n+1;
+            
+block scripts 
+    script(src="https://unpkg.com/swiper@7/swiper-bundle.min.js") 
+    script(src="/assets/js/slider.js") 
+
+

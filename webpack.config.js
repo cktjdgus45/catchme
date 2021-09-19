@@ -15,7 +15,8 @@ module.exports = {
         preview: BASE_JS + "preview.js",
         singlePage: BASE_JS + "singlePage.js",
         videoPlayer: BASE_JS + "videoPlayer.js",
-        bulma: BASE_JS + "bulma.js"
+        bulma: BASE_JS + "bulma.js",
+        slider: BASE_JS + "slider.js",
     },
     output: {
         filename: "js/[name].js",
