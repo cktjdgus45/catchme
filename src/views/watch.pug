@@ -35,8 +35,8 @@ block content
                 a(href=`/users/${video.owner._id}`) #{video.owner.name}
         div.videoUploader__access
             if String(video.owner._id) === String(loggedInUser._id)
-            a(href=`${video.id}/edit`).videoUploader__access-btn-edit 동영상 수정
-            a(href=`${video.id}/delete`).videoUploader__access-btn-delete 동영상 삭제
+            a(href=`${video.id}/edit`).videoUploader__access-btn-edit.button 동영상 수정
+            a(href=`${video.id}/delete`).videoUploader__access-btn-delete.button 동영상 삭제
     div.videoDescription
             p=video.description
     if loggedIn

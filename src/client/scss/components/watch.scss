@@ -28,12 +28,14 @@
           }
     }
 }
+@media screen and (max-width: 610px) {
+    .videoUploader { display: block;}
+    .videoUploader__access{margin-top: 10px;}
+ }
+
 .videoDescription{
     border-bottom: 1px solid $--color-black-opacity;
     padding-bottom: 40px;
-    width: inherit;
-    height: auto;
-    overflow-wrap: wrap;
 }
 
 .videoView{
@@ -153,6 +155,9 @@
                     color: $--color-grey;
                 }
             }
+        }
+        .delBtn{
+            cursor: pointer;
         }
     }
 }
