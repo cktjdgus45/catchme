@@ -1,9 +1,10 @@
 extends base.pug
-include mixins/video.pug
+include mixins/video
 
 block content 
-    div.video-grid
-        each video in videos 
-            +video(video)
-        else
-            span.empty__message No videos Found
+    - let n = 0;
+    .columns.is-vcentered.is-multiline
+        while n < videos.length
+            .column.is-one-quarter
+                +video(videos[n])
+            - n=n+1;

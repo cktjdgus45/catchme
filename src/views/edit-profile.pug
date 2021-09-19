@@ -18,11 +18,14 @@ block content
             div.profile__form-manage
                 a(href="change-password").profile__form-changepassword change password
                 a(href="leave-account").profile__form-leaveaccount leave account
-    div.video-grid
-        each video in user.videos
-            +video(video)                        
-        else 
-            span.empty__message 업로드한 비디오가 없습니다.
+        - let n = 0;
+        .columns.is-vcentered.is-multiline
+            while n < videos.length
+                .column.is-one-quarter
+                    +video(videos[n])
+                - n=n+1;                      
+            else 
+                span.empty__message 업로드한 비디오가 없습니다.
 block scripts
     script(src="/assets/js/preview.js")
         
