@@ -19,13 +19,13 @@ block content
                 a(href="change-password").profile__form-changepassword change password
                 a(href="leave-account").profile__form-leaveaccount leave account
         - let n = 0;
-        .columns.is-vcentered.is-multiline
-            while n < videos.length
-                .column.is-one-quarter
-                    +video(videos[n])
-                - n=n+1;                      
-            else 
-                span.empty__message 업로드한 비디오가 없습니다.
+    .columns.is-vcentered.is-multiline
+        while n < user.videos.length
+            .column.is-one-quarter
+                +video(user.videos[n])
+            - n=n+1;                      
+    if(!user.videos) 
+        span.empty__message 업로드한 비디오가 없습니다.
 block scripts
     script(src="/assets/js/preview.js")
         

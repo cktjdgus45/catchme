@@ -12,20 +12,6 @@ export const logout = (req, res) => {
     return res.redirect('/home');
 }
 
-export const see = async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findById(id).populate({
-        path: "videos",
-        populate: {
-            path: "owner",
-            model: "User",
-        },
-    });
-    if (!user) {
-        return res.status(404).render("404", { pageTitle: "User not found." });
-    }
-    return res.render("profile", { pageTitle: user.name, user });
-};
 
 export const getChangePassword = (req, res) => {
     if (req.session.user.socialOnly === true) {
@@ -76,9 +62,20 @@ export const postChangePassword = async (req, res) => {
 
 export const getEdit = async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(id).populate("videos");
+    // const user = await User.findById(id).populate("videos");
+    // if (!user) {
+    //     return res.status(400).render('404', { pageTitle: "계정 오류" });
+    // }
+
+    const user = await User.findById(id).populate({
+        path: "videos",
+        populate: {
+            path: "owner",
+            model: "User",
+        },
+    });
     if (!user) {
-        return res.status(400).render('404', { pageTitle: "계정 오류" });
+        return res.status(404).render("404", { pageTitle: "User not found." });
     }
     return res.render('edit-profile', { pageTitle: "프로파일 업데이트", user });
 }
