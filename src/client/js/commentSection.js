@@ -15,7 +15,7 @@ const addComment = (text, newCommentId, commentOwner, createdAt) => {
     const newComment = document.createElement("li");
     const span2 = document.createElement("span");
     newComment.dataset.id = newCommentId;
-    span2.innerText = '❌';
+    span2.innerHTML = `<i class="fas fa-eraser"></i>`;
     newComment.appendChild(span2);
     newComment.className = "comment";
     newComment.innerHTML = `
@@ -41,7 +41,8 @@ const addComment = (text, newCommentId, commentOwner, createdAt) => {
 
 const handleDelete = async (event) => {
     event.preventDefault();
-    const delbtn = event.target;
+    const icon = event.target;
+    const delbtn = icon.parentNode;
     const comment = delbtn.parentNode;
     const videoComments = comment.parentNode;
     const commentId = comment.dataset.id;

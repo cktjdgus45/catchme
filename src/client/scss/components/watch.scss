@@ -129,13 +129,14 @@
 .video__comments{
     .comment{
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         margin: 30px 0px;
         width: inherit;
         .comment-box{
             display: flex;
             width: inherit;
+            margin-right: 10px;
         }
         .comment-wrapper{
             .writer{

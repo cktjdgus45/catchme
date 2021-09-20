@@ -59,7 +59,8 @@ block content
                             div.content
                                 span=`${comment.text}`
                     if String(comment.owner._id)===String(loggedInUser._id)
-                        span.delBtn ❌
+                        span.delBtn
+                            i.fas.fa-eraser
 block scripts
     script(src="/assets/js/commentSection.js") 
     script(src="/assets/js/videoPlayer.js") 
