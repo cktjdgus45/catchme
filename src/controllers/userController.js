@@ -62,11 +62,6 @@ export const postChangePassword = async (req, res) => {
 
 export const getEdit = async (req, res) => {
     const { id } = req.params;
-    // const user = await User.findById(id).populate("videos");
-    // if (!user) {
-    //     return res.status(400).render('404', { pageTitle: "계정 오류" });
-    // }
-
     const user = await User.findById(id).populate({
         path: "videos",
         populate: {
@@ -438,5 +433,5 @@ export const getNews = async (req, res) => {
     };
 
     const news = (await axios(config)).data.items;
-    return res.render('news', { pageTitle: "news", news });
+    return res.render('news', { pageTitle: "취업관련 뉴스", news });
 }

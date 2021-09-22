@@ -6,7 +6,7 @@ import moment from 'moment';
 export const home = async (req, res) => {
     try {
         const videos = await Video.find({}).populate("owner");
-        return res.render('home', { pageTitle: "Home", videos });
+        return res.render('home', { pageTitle: "Catch Me", videos });
     } catch (error) {
         console.log(error);
     }
@@ -14,7 +14,7 @@ export const home = async (req, res) => {
 
 export const single = async (req, res) => {
     try {
-        return res.render('single', { pageTitle: "싱글페이지 작성" });
+        return res.render('single', { pageTitle: "Catch Me" });
     } catch (error) {
         console.log(error);
     }
@@ -28,13 +28,13 @@ export const search = async (req, res) => {
                 $regex: new RegExp(keyword, "i"),
             }
         }).populate({ path: 'owner' });
-        return res.render('search', { pageTitle: `Home`, videos });
+        return res.render('search', { pageTitle: `${keyword} - CatchMe`, videos });
     }
-    return res.render('search', { pageTitle: "Home", videos });
+    return res.render('search', { pageTitle: `${keyword} - CatchMe`, videos });
 }
 
 export const getUpload = (req, res) => {
-    return res.render('upload', { pageTitle: "Upload Video" });
+    return res.render('upload', { pageTitle: "영상 업로드" });
 }
 
 export const postUpload = async (req, res) => {
@@ -61,7 +61,7 @@ export const postUpload = async (req, res) => {
         return res.redirect('/home');
     } catch (error) {
         console.log(error);
-        return res.render('upload', { pageTitle: "비디오 업로드", errorMessage: error._message });
+        return res.render('upload', { pageTitle: "영상 업로드", errorMessage: error._message });
     }
 }
 
