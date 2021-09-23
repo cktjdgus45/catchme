@@ -17,6 +17,7 @@ module.exports = {
         videoPlayer: BASE_JS + "videoPlayer.js",
         bulma: BASE_JS + "bulma.js",
         slider: BASE_JS + "slider.js",
+        videoRecord: BASE_JS + "videoRecord.js"
     },
     output: {
         filename: "js/[name].js",
