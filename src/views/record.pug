@@ -1,7 +1,9 @@
 extends base.pug
 
 block content  
-    video(width="700",height="400" controls)
+    button#start.button start recording
+    button#stop(disabled).button stop recording
+    video(autoplay , controls=true , width="600",height="400")
 block scripts
     script(defer src="/assets/js/videoRecord.js")
     
