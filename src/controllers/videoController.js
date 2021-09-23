@@ -281,3 +281,10 @@ export const registerDislike = async (req, res) => {
         videoMeta: video.meta,
     });
 }
+
+export const getVideoRecord = (req, res) => {
+    if (!req.session) {
+        return;
+    }
+    return res.render("record", { pageTitle: "비디오녹화" });
+}
