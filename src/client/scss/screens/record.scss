@@ -1,0 +1,25 @@
+.recordContainer-btns{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    background-color: $--color-main-blue;
+    justify-content: space-evenly;
+    background-color: $--color-iphone;
+    border-radius: 0 0 15px 15px;
+}
+
+.recordContainer{
+    video{
+        width: 100%;
+        height: 100%;
+        padding: 30px;
+    }
+    .screen{
+        background-color: $--color-black;
+    }
+}
+
+.apple-ico{
+    color: $--color-black;
+    font-size: 40px;
+}

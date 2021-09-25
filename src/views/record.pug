@@ -1,9 +1,18 @@
 extends base.pug
 
-block content  
-    button#start.button start recording
-    button#stop(disabled).button stop recording
-    video(autoplay , controls=true , width="600",height="400")
+block content      
+    h1.title.is-1.has-text-grey.auth-title
+        i.far.fa-file-video 
+        span VIDEO RECORD
+    .container.is-fullhd.recordContainer
+        .screen
+            video(controls=true)
+        .recordContainer-btns
+            button#start.button
+                i.fas.fa-video
+            i.fab.fa-apple.apple-ico
+            button#stop(disabled).button
+                i.fas.fa-video-slash
 block scripts
     script(defer src="/assets/js/videoRecord.js")
     
