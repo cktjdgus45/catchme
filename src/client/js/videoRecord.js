@@ -4,19 +4,28 @@ const video = document.querySelector("video");
 
 let recorder, stream;
 
+const handleRecord = (stream) => {
+    recorder = new MediaRecorder(stream);
+    const chunks = [];
+    recorder.ondataavailable = e => chunks.push(e.data);
+    recorder.onstop = e => {
+        const completeBlob = new Blob(chunks, { type: chunks[0].type });
+        video.src = URL.createObjectURL(completeBlob);
+    };
+    recorder.start();
+}
+
 async function recordScreen() {
     if (!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia)) {
-        return window.alert('Screen Record not supported!')
+        return window.alert('화면 녹화가 지원되지 않습니다')
     }
     stream = null;
     const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: { cursor: "motion" }, audio: { 'echoCancellation': true } });
-    if (window.confirm("Record audio with screen?")) {
+    if (window.confirm("오디오를 켜시겠습니까?")) {
         const audioContext = new AudioContext();
-
+        const audioDestination = audioContext.createMediaStreamDestination();
         const voiceStream = await navigator.mediaDevices.getUserMedia({ audio: { 'echoCancellation': true }, video: false });
         const userAudio = audioContext.createMediaStreamSource(voiceStream);
-
-        const audioDestination = audioContext.createMediaStreamDestination();
         userAudio.connect(audioDestination);
 
         if (displayStream.getAudioTracks().length > 0) {
@@ -26,25 +35,10 @@ async function recordScreen() {
 
         const tracks = [...displayStream.getVideoTracks(), ...audioDestination.stream.getTracks()]
         stream = new MediaStream(tracks);
-        recorder = new MediaRecorder(stream);
-        const chunks = [];
-        recorder.ondataavailable = e => chunks.push(e.data);
-        recorder.onstop = e => {
-            const completeBlob = new Blob(chunks, { type: chunks[0].type });
-            video.src = URL.createObjectURL(completeBlob);
-        };
-
-        recorder.start();
-
+        handleRecord(stream);
     } else {
         stream = displayStream;
-        recorder = new MediaRecorder(stream);
-        const chunks = [];
-        recorder.ondataavailable = e => chunks.push(e.data);
-        recorder.onstop = e => {
-            const completeBlob = new Blob(chunks, { type: chunks[0].type });
-            video.src = URL.createObjectURL(completeBlob);
-        };
+        handleRecord(stream);
     };
 }
 
@@ -61,5 +55,6 @@ stop.addEventListener("click", () => {
 
     recorder.stop();
     stream.getVideoTracks()[0].stop();
+    stream.getAudioTracks()[0].stop();
 });
 
