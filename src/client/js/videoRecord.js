@@ -20,7 +20,7 @@ async function recordScreen() {
         return window.alert('화면 녹화가 지원되지 않습니다')
     }
     stream = null;
-    const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: { cursor: "motion" }, audio: { 'echoCancellation': true } });
+    const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen" }, audio: { 'echoCancellation': true } });
     if (window.confirm("오디오를 켜시겠습니까?")) {
         const audioContext = new AudioContext();
         const audioDestination = audioContext.createMediaStreamDestination();
@@ -40,6 +40,16 @@ async function recordScreen() {
         stream = displayStream;
         handleRecord(stream);
     };
+    stream.getVideoTracks()[0].onended = function () {
+        // doWhatYouNeedToDo();
+        console.log('stop sharing')
+        stop.setAttribute("disabled", true);
+        start.removeAttribute("disabled");
+
+        recorder.stop();
+        stream.getAudioTracks()[0].stop();
+        stream.getVideoTracks()[0].stop();
+    };
 }
 
 start.addEventListener("click", () => {
@@ -57,4 +67,6 @@ stop.addEventListener("click", () => {
     stream.getVideoTracks()[0].stop();
     stream.getAudioTracks()[0].stop();
 });
+
+
 
