@@ -6,6 +6,9 @@ import moment from 'moment';
 export const home = async (req, res) => {
     try {
         const videos = await Video.find({}).populate("owner");
+        videos.forEach(video => {
+            video.createdAt = diff(video.createdAt);
+        });
         return res.render('home', { pageTitle: "Catch Me", videos });
     } catch (error) {
         console.log(error);
@@ -41,11 +44,14 @@ export const postUpload = async (req, res) => {
     const { _id } = req.session.user;
     const { title, description, hashtags } = req.body;
     const { video, thumb } = req.files;
+    const now = moment().format('YYYY-M-D-H-m-s'); //"2021-08-28-13-08-46"
+    const nowArr = now.split('-');
     try {
         const newVideo = await Video.create({
             title,
             description,
             fileUrl: video[0].path,
+            createdAt: nowArr,
             thumbUrl: `${thumb[0].destination + thumb[0].filename}`,
             hashtags: Video.formatHashtags(hashtags),
             owner: _id,
