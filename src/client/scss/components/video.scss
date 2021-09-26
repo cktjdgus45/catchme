@@ -7,15 +7,24 @@
         border: 1px solid $--color-black;
     }
     .video-mixin__data{
-        padding: 0px 15px;
         .video-mixin__title{
             font-size: 18px;
-            margin-top: 10px;
             display: block;
         }
+        .video-mixin__uploader{
+            margin-top: 7px;
+        }
         .video-mixin__meta{
-            margin-top: 5px;
             font-size: 12px;
+            margin-top: 3px;
         }
     }
+}
+.video-mixin-wrapper{
+    margin-top: 7px;
+}
+.video-avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }

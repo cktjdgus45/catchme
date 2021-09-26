@@ -23,11 +23,12 @@ block content
                     i.fas.fa-expand
     div.videoTitle
         p=video.title
-    div.videoView
-        p 조회수&nbsp&nbsp#{video.meta.views}회
-        span #{video.createdAt[0]}
-        span #{video.createdAt[1]}
-        span #{video.createdAt[2]}
+    div.videoInfo
+        .videoInfo-wrapper
+            span 조회수&nbsp&nbsp#{video.meta.views}회  &#4510;
+            span #{video.createdAt[0]} &#4510;
+            span #{video.createdAt[1]} &#4510;
+            span #{video.createdAt[2]} 
         div.like
             i.fas.fa-thumbs-up(class=`like${liking}`)
             span.like-count #{video.meta.likes.length}
