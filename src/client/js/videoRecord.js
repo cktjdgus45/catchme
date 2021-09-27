@@ -41,8 +41,6 @@ async function recordScreen() {
         handleRecord(stream);
     };
     stream.getVideoTracks()[0].onended = function () {
-        // doWhatYouNeedToDo();
-        console.log('stop sharing')
         stop.setAttribute("disabled", true);
         start.removeAttribute("disabled");
 

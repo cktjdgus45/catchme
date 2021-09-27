@@ -1,6 +1,23 @@
 extends base.pug
 
-block content      
+block content          
+    .modal 
+        .modal-background 
+        .modal-card 
+            header.modal-card-head 
+                p.modal-card-title 영상 녹화 안내
+                button.delete(aria-labl="close")
+            section.modal-card-body 
+                .first
+                    img(src="/img/1.png")
+                .second
+                    img(src="/img/3.png")
+                .third
+                    img(src="/img/2.png")
+            footer.modal-card-foot 
+                button.button.is-success.modalSave I understand
+                button.button.modalClose Cancel
+        button.modal-close.is-large(aria-label="close")
     h1.title.is-1.has-text-grey.auth-title
         i.far.fa-file-video 
         span VIDEO RECORD
@@ -15,4 +32,5 @@ block content
                 i.fas.fa-video-slash
 block scripts
     script(defer src="/assets/js/videoRecord.js")
+    script(defer src="assets/js/bulma.js")
     
