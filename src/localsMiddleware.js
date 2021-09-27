@@ -33,7 +33,7 @@ export const avatarUpload = multer({
 
 export const videoUpload = multer({
     dest: "uploads/videos/", limits: {
-        fileSize: 20000000
+        fileSize: 400000000
     }
 });
 //multer 은 dest에 해당하는곳으로 파일들을 저장하게 해줌.

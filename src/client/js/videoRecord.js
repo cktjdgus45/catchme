@@ -5,12 +5,18 @@ const video = document.querySelector("video");
 let recorder, stream;
 
 const handleRecord = (stream) => {
-    recorder = new MediaRecorder(stream);
+    recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
     const chunks = [];
     recorder.ondataavailable = e => chunks.push(e.data);
     recorder.onstop = e => {
         const completeBlob = new Blob(chunks, { type: chunks[0].type });
-        video.src = URL.createObjectURL(completeBlob);
+        const videoFile = URL.createObjectURL(completeBlob);
+        const a = document.createElement("a");
+        a.href = videoFile;
+        a.download = "My Recordin.webm";
+        document.body.appendChild(a);
+        a.click();
+        video.src = videoFile;
     };
     recorder.start();
 }
