@@ -25,3 +25,12 @@
     color: $--color-black;
     font-size: 40px;
 }
+
+.modal-content{
+    padding-bottom: 30px;
+    padding-top: 30px;
+    border-bottom: 1px solid $--color-black-opacity;
+    .desciption{
+        margin-bottom: 10px;
+    }
+}

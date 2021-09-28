@@ -10,6 +10,7 @@ const modalCardCloseBtn = document.querySelector('.delete');
 const modalCardCloseBtn2 = document.querySelector('.modalSave');
 const modalCardCloseBtn3 = document.querySelector('.modalClose');
 
+
 //searchBtn - header
 if (searchBtn) {
     searchBtn.addEventListener('click', () => {
@@ -36,6 +37,11 @@ if (modalContainer) {
     window.onload = () => {
         modalContainer.classList.add('is-active');
     }
+    modalCloseBtn.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
+    })
+}
+if (modalCardCloseBtn3) {
     modalCardCloseBtn.addEventListener('click', () => {
         modalContainer.classList.remove('is-active');
     })

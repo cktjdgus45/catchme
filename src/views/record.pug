@@ -5,15 +5,29 @@ block content
         .modal-background 
         .modal-card 
             header.modal-card-head 
-                p.modal-card-title 영상 녹화 안내
+                h1.modal-card-title 영상 녹화 안내
                 button.delete(aria-labl="close")
             section.modal-card-body 
-                .first
-                    img(src="/img/1.png")
-                .second
-                    img(src="/img/3.png")
-                .third
-                    img(src="/img/2.png")
+                .modal-content
+                    p.desciption 
+                        span 1.&nbsp;
+                        span 
+                            i.fas.fa-video  &nbsp;(녹화)버튼을 누릅니다
+                    img(src="/img/record1.png")
+                .modal-content
+                    p.desciption 
+                        span 2. 공유할 스크린을 선택합니다.
+                    img(src="/img/record2.png")
+                .modal-content
+                    p.desciption 
+                        span 3. 오디오 사용 여부를 선택합니다.
+                    img(src="/img/record3.png")
+                .modal-content
+                    p.desciption 
+                        span 4.&nbsp;
+                        span 
+                            i.fas.fa-video-slash  &nbsp;(녹화 중지)버튼을 누르거나 '공유중지' 버튼을 누릅니다
+                    img(src="/img/record4.png")
             footer.modal-card-foot 
                 button.button.is-success.modalSave I understand
                 button.button.modalClose Cancel
