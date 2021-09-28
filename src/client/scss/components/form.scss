@@ -1,6 +1,4 @@
 .auth__form,.upload__form{
-    max-width: 500px;
-    margin: 0 auto;
     display: flex;
     margin-bottom: 110px;
     flex-direction: column;  
@@ -37,6 +35,9 @@
     label{
         margin-bottom: 10px;
     }
+    .uploadBtn{
+        margin-top: 25px;
+    }
 }
 //edit-profile.pug
 .profile__form,.upload__form{
@@ -44,11 +45,19 @@
         display: none;
     }
     .profile__form-avatar,.upload__form-img{
+        cursor: pointer;
         display: flex;
         flex-direction: column;
         margin: 0 auto;
         align-items: center;
         justify-content: center;
+        background-color: $--color-upload-bg;
+        margin-bottom: 5px;
+        padding: 30px 15px;
+        i{
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
     }
     img,span{
         cursor: pointer;
@@ -67,4 +76,10 @@
         } 
     }
 }
-
+.auth__form{
+    max-width: inherit;
+    margin: 0 auto;
+}
+.input{
+    max-width: 95%;
+}

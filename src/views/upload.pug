@@ -1,35 +1,26 @@
 extends base.pug
 
 block content
-    .modal  
-        .modal-background 
-        .modal-card 
-            header.modal-card-head 
-                h1.modal-card-title 비디오 파일 안내
-                button.delete(aria-labl="close")
-            section.modal-card-body 
-                .modal-content
-                    p.desciption 
-                        span  동영상 파일의 확장자를 mp4로 바꿔주세요.
-                        p
-                            a.button(href="https://cloudconvert.com/webm-converter" target="_blank") Cloud Convert 바로가기
-            footer.modal-card-foot 
-                button.button.is-success.modalSave I understand
-                button.button.modalClose Cancel
-        button.modal-close.is-large(aria-label="close")
     h1.title.is-1.has-text-grey.auth-title 
         i.fas.fa-cloud-upload-alt
         span VIDEO UPLOAD
     form(method="POST",enctype="multipart/form-data").upload__form
-        label(for="thumb").upload__form-img.label
-            img(src="/img/uploadImg.png",width="100",height="100")#preview-image
-            span 미리보기 이미지
-            input(type="file",accept="image/*",required,id="thumb",name="thumb").input-image
-        label(for="video").label 동영상
-        input.input.is-medium(type="file",accept="video/mp4",required,id="video",name="video")
-        input.input.is-medium(placeholder="제목을 입력하세요",required,type="text",name="title",maxlength="50",autocomplete="off")
-        textarea.input.is-normal(placeholder="영상 소개",name="description").upload__form-description
-        input.input.is-medium(placeholder="콤마로 구분됨",maxlength="50",required,type="textarea",name="hashtags",autocomplete="off")
-        input.button.is-large(value="영상 업로드", type="submit")
+        .columns 
+            .column
+                label(for="thumb").upload__form-img.label
+                    img(src="/img/uploadImg.png",width="200",height="150")#preview-image
+                    span 미리보기 이미지
+                    span &bull; JPEG 또는 PNG
+                    input(type="file",accept="image/*",required,id="thumb",name="thumb").input-image
+                label(for="video").upload__form-img.label#video-label 
+                    i.fas.fa-cloud-upload-alt
+                    span 업로드할 동영상 선택
+                    span &bull; MP4
+                    input.input.is-small(type="file",accept="video/mp4",style="display:none;",required,id="video",name="video").input-video
+            .column.is-three-fifths
+                input.input.is-medium(placeholder="제목을 입력하세요",required,type="text",name="title",maxlength="50",autocomplete="off")
+                textarea.input.is-medium(placeholder="영상 소개",name="description").upload__form-description
+                input.input.is-medium(placeholder="콤마로 구분됨",maxlength="50",required,type="textarea",name="hashtags",autocomplete="off")
+                input.button.is-medium.uploadBtn(value="영상 업로드", type="submit")
 block scripts
     script(src="/assets/js/preview.js")
