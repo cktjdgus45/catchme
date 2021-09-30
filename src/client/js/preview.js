@@ -11,7 +11,6 @@ function readImage(input) {
     }
 }
 function readVideo(input) {
-    console.log(input)
     if (input.files && input.files[0]) {
         const reader = new FileReader()
         reader.onload = e => {
@@ -25,22 +24,29 @@ function readVideo(input) {
         reader.readAsDataURL(input.files[0])
     }
 }
+if (videoLabel) {
+    function removeAllChild(parent) {
+        parent.childNodes[1].style.display = "none";
+        parent.childNodes[2].style.display = "none";
+        parent.childNodes[3].style.display = "none";
+    }
 
-function removeAllChild(parent) {
-    while (videoLabel.hasChildNodes()) {
-        videoLabel.removeChild(videoLabel.firstChild);
+    function makeLabelToVideo(video) {
+        removeAllChild(videoLabel);
+        videoLabel.appendChild(video);
     }
 }
 
-function makeLabelToVideo(video) {
-    removeAllChild(videoLabel);
-    videoLabel.appendChild(video);
-}
 const inputImage = document.querySelector(".input-image")
-inputImage.addEventListener("change", e => {
-    readImage(e.target)
-})
+if (inputImage) {
+    inputImage.addEventListener("change", e => {
+        readImage(e.target)
+    })
+}
+
 const inputVideo = document.querySelector(".input-video")
-inputVideo.addEventListener("change", e => {
-    readVideo(e.target)
-})
+if (inputVideo) {
+    inputVideo.addEventListener("change", e => {
+        readVideo(e.target)
+    })
+}

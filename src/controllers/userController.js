@@ -3,7 +3,7 @@ import Video from '../models/Video';
 import bcrypt from 'bcrypt';
 import fetch from 'node-fetch';
 import axios from 'axios';
-
+import moment from 'moment';
 
 export const logout = (req, res) => {
     req.flash('success', '성공적으로 로그아웃 되었습니다.');
@@ -15,8 +15,8 @@ export const logout = (req, res) => {
 
 export const getChangePassword = (req, res) => {
     if (req.session.user.socialOnly === true) {
-        req.flash("error", "you're logged in with social Auth");
-        res.redirect('/home');
+        req.flash("error", "You are logged in with Social Account!");
+        return res.redirect('/home');
     }
     return res.render("change-password", { pageTitle: "비밀번호 변경" });
 }
@@ -26,9 +26,10 @@ export const getLeaveAccount = async (req, res) => {
     const user = await User.findById(id);
     const whatUserUpload = user.videos;
     const whatUserUploadArr = Object.values(whatUserUpload);
+    console.log(whatUserUploadArr);
     let i;
     for (i = 0; i < whatUserUploadArr.length; i++) {
-        await Video.findByIdAndRemove(a[i]);
+        await Video.findByIdAndRemove(whatUserUploadArr[i]);
     }
     await User.findByIdAndRemove(id);
     req.session.loggedIn = false;
@@ -73,6 +74,46 @@ export const getEdit = async (req, res) => {
         return res.status(404).render("404", { pageTitle: "User not found." });
     }
     return res.render('edit-profile', { pageTitle: "프로파일 업데이트", user });
+}
+export const getUserVideos = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id).populate({
+        path: "videos",
+        populate: {
+            path: "owner",
+            model: "User",
+        },
+    });
+    user.videos.forEach(video => {
+        video.createdAt = diff(video.createdAt);
+    })
+    if (!user) {
+        return res.status(404).render("404", { pageTitle: "User not found." });
+    }
+    return res.render('myVideo', { pageTitle: "내 동영상", user });
+}
+export const getProfile = async (req, res) => {
+    return res.render('myProfile', { pageTitle: "내 동영상" });
+}
+const diff = (createdAt) => {
+    const nowArr = moment().format('YYYY-M-D-H-m-s').split('-'); //현재날짜배열
+    const currentTime = moment(nowArr); //댓글쓴시간 ==현재
+    const commentTime = moment(createdAt); //댓글이 쓰여진 시간
+    let cmTime = currentTime.diff(commentTime, 'seconds');
+    if (cmTime < 60) {
+        return cmTime = currentTime.diff(commentTime, 'seconds') + '초전';
+    }
+    else if (cmTime > 60 && cmTime <= 3600) {
+        return cmTime = currentTime.diff(commentTime, 'minutes') + '분전';
+    } else if (cmTime > 3600 && cmTime <= 86400) {
+        return cmTime = currentTime.diff(commentTime, 'hours') + '시간전';
+    } else if (cmTime > 86400 && cmTime <= 2772000) {
+        return cmTime = currentTime.diff(commentTime, 'days') + '일전';
+    } else if (cmTime > 2772000 && cmTime <= 31536000) {
+        return cmTime = currentTime.diff(commentTime, 'months') + '달전';
+    } else if (cmTime > 31536000) {
+        return cmTime = currentTime.diff(commentTime, 'years') + '년전';
+    }
 }
 
 export const postEdit = async (req, res) => {
