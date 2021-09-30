@@ -67,6 +67,7 @@ export const postUpload = async (req, res) => {
         return res.redirect('/home');
     } catch (error) {
         console.log(error);
+        req.flash('error', `${error}로 인해 업로드가 안되었습니다.`);
         return res.render('upload', { pageTitle: "영상 업로드", errorMessage: error._message });
     }
 }
