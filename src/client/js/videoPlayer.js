@@ -50,7 +50,7 @@ const handleLoadedMetadata = () => {
         window.alert("지원되지 않는 파일입니다.")
         return;
     }
-    totalTime.innerText = `00:${Math.floor(video.duration) < 10 ? `0${Math.ceil(video.duration)}` : `${Math.ceil(video.duration)}`}`;
+    diff(video.duration)
     timeLine.max = Math.floor(video.duration);
 }
 video.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -63,6 +63,21 @@ const handleTimeUpdate = () => {
         playBtn.innerHTML = '<i class="fas fa-play"></i>';
     }
 }
+
+const diff = (videoduration) => {
+    //video duration 117 -> 1:57  117/60 11:56 1:11:15
+    if (videoduration > 60) {//분
+        const front = Math.floor(videoduration / 60);
+        const back = Math.ceil(videoduration % 60);
+        totalTime.innerText = `${front}:${back}`;
+    }
+    if (videoduration > 3600) {//시간
+        const front2 = Math.floor(videoduration / 60);
+        const back2 = Math.ceil(videoduration % 60);
+        totalTime.innerText = `${front2}:${back2}`;
+    }
+}
+
 video.addEventListener('timeupdate', handleTimeUpdate);
 
 //timeLine
