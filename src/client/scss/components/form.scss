@@ -41,6 +41,9 @@
 }
 //edit-profile.pug
 .profile__form,.upload__form{
+    .button{
+        width: 97%;
+    }
     .input-image{
         display: none;
     }
