@@ -1,6 +1,6 @@
 mixin video(video)
     a(href=`/videos/${video.id}`).video-mixin
-        div.video-mixin__thumb(style=`background:url(${"/"+video.thumbUrl});background-size:cover;background-position:center;`)
+        div.video-mixin__thumb(style=`background:url(${"/"+video.thumbUrl});background-size:contain;background-position:center; background-repeat:no-repeat;`)
         .columns.video-mixin-wrapper
             .column.is-one-quarter
                 img.video-avatar(src=`${video.owner.avatarUrl}`)
