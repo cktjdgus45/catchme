@@ -10,7 +10,6 @@ const modalCardCloseBtn = document.querySelector('.delete');
 const modalCardCloseBtn2 = document.querySelector('.modalSave');
 const modalCardCloseBtn3 = document.querySelector('.modalClose');
 
-
 //searchBtn - header
 if (searchBtn) {
     searchBtn.addEventListener('click', () => {

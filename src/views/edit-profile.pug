@@ -4,28 +4,22 @@ include mixins/video
 block content
     h1.title.is-1.has-text-grey.auth-title 
         i.fas.fa-user 
-        span 프로파일
-    form(method="POST",enctype="multipart/form-data").auth__form.profile__form
-        label(for="avatar").profile__form-avatar
-            img(src=`${loggedInUser.avatarUrl && loggedInUser.avatarUrl.startsWith('uploads') ? "/"+loggedInUser.avatarUrl : loggedInUser.avatarUrl}`,width="100",height="100")#preview-image
-            span 새 이미지 업로드
-            input(type="file",id="avatar",name="avatar",accept="image/*").input-image
-        input.input.is-large(name="email",type="email",placeholder="이메일",required,autocomplete="off",autocapitalize="off",value=loggedInUser.email)
-        input.input.is-large(name="name",type="text",placeholder="이름",required,autocomplete="chrome-off",value=loggedInUser.name)
-        input.input.is-large(name="location",type="text",placeholder="위치",required,autocomplete="chrome-off",value=loggedInUser.location)    
-        input.button.is-large(type="submit",value="업데이트")   
-        if !loggedInUser.socialOnly  
-            div.profile__form-manage
-                a(href="change-password").profile__form-changepassword change password
-                a(href="leave-account").profile__form-leaveaccount leave account
-        - let n = 0;
-    .columns.is-vcentered.is-multiline
-        while n < user.videos.length
-            .column.is-one-quarter
-                +video(user.videos[n])
-            - n=n+1;                      
-    if(!user.videos) 
-        span.empty__message 업로드한 비디오가 없습니다.
+        span 내정보
+    .tabs.is-large 
+        ul
+            li
+                a(href=`profile`) 내정보변경
+            li
+                a(href=`videos`) 내 동영상
+            li
+                a(href=`change-password`) 비밀번호            
+            li
+                a(href=`leave-account`) 회원탈퇴    
+    section.hero.is-info.is-medium
+        .hero-body 
+            img.user-avatar(src=`${loggedInUser.avatarUrl}`)
+            p.title #{loggedInUser.name}
+            p.subtitle #{loggedInUser.email}
 block scripts
     script(src="/assets/js/preview.js")
         
