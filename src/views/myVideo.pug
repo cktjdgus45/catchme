@@ -1,0 +1,24 @@
+extends base.pug
+include mixins/video
+
+block content
+    h1.title.is-1.has-text-grey.auth-title 
+        i.fas.fa-user 
+        span 내정보
+    .tabs.is-large 
+        ul
+            li
+                a(href=`edit`) 프로파일
+            li.is-active
+                a(href=`videos`) 동영상
+            li
+                a(href=`change-password`) 비밀번호  
+    if(!user.videos[0])
+        span 업로드한비디오가 없습니다.
+      
+    - let n = 0;
+    .columns.is-vcentered.is-multiline
+        while n < user.videos.length
+            .column.is-one-quarter
+                +video(user.videos[n])
+            - n=n+1;  
