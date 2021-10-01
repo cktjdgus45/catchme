@@ -29,7 +29,7 @@ if (disagreeBtn) {
             method: "GET",
         })
         if (response.status == 201) {
-            window.location.href = "http://localhost:4000/home";
+            window.location.href = "/home";
         }
     })
     disagreeBtn.addEventListener('click', () => {
