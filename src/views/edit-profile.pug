@@ -19,7 +19,7 @@ block content
         .hero-body 
             .columns.user-info
                 .column
-                    img.profile-avatar(src=`${loggedInUser.avatarUrl}`)
+                    img.profile-avatar(src=`${loggedInUser.avatarUrl && loggedInUser.avatarUrl.startsWith('uploads') ? "/"+loggedInUser.avatarUrl : loggedInUser.avatarUrl}`)               
                 .column
                     p.title #{loggedInUser.name}
                     p.subtitle #{loggedInUser.email}

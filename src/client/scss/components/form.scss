@@ -68,6 +68,9 @@
     img,span{
         cursor: pointer;
         margin-bottom: 15px;
+        border-radius: 50%;
+        width: 60%;
+        height: 60%;
     }
     .profile__form-manage{
         display: flex;
@@ -83,9 +86,13 @@
     }
 }
 .auth__form{
-    max-width: 400px;
+    width: 70%;
     margin: 0 auto;
 }
 .input{
     max-width: 95%;
+}
+
+.edit__form{
+    margin-top: 110px;
 }

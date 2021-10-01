@@ -25,7 +25,7 @@ header.container
                         .dropdown
                             .dropdown-trigger
                                 button.button(aria-haspopup='true' aria-controls='dropdown-menu5')
-                                    img.user-avatar(src=`${loggedInUser.avatarUrl}`)
+                                    img.user-avatar(src=`${loggedInUser.avatarUrl && loggedInUser.avatarUrl.startsWith('uploads') ? "/"+loggedInUser.avatarUrl : loggedInUser.avatarUrl}`)
                                     span.user-name #{loggedInUser.name}
                                     span.icon.is-small
                                         i.fas.fa-angle-down(aria-hidden='true')
