@@ -1,4 +1,10 @@
 const videoLabel = document.getElementById('video-label');
+const modalContainer = document.querySelector('.modal');
+const modalBtn = document.querySelector('.modalBtn');
+const modalCloseBtn = document.querySelector('.modal-close');
+const modalCardCloseBtn = document.querySelector('.delete');
+const modalCardCloseBtn2 = document.querySelector('.modalSave');
+const modalCardCloseBtn3 = document.querySelector('.modalClose');
 
 function readImage(input) {
     if (input.files && input.files[0]) {
@@ -48,5 +54,26 @@ const inputVideo = document.querySelector(".input-video")
 if (inputVideo) {
     inputVideo.addEventListener("change", e => {
         readVideo(e.target)
+    })
+}
+
+//modalBtn
+if (modalContainer) {
+    window.onload = () => {
+        modalContainer.classList.add('is-active');
+    }
+    modalCloseBtn.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
+    })
+}
+if (modalCardCloseBtn3) {
+    modalCardCloseBtn.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
+    })
+    modalCardCloseBtn2.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
+    })
+    modalCardCloseBtn3.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
     })
 }

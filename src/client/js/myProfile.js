@@ -1,0 +1,36 @@
+//laeve account
+const videoLabel = document.getElementById('video-label');
+const modalContainer = document.querySelector('.modal');
+const modalBtn = document.querySelector('.modalBtn');
+const modalCloseBtn = document.querySelector('.modal-close');
+const modalCardCloseBtn = document.querySelector('.delete');
+const agreeBtn = document.querySelector('.modalSave');
+const disagreeBtn = document.querySelector('.modalClose');
+const section = document.querySelector('.is-info');
+
+const leave = document.querySelector('.leave-account');
+leave.addEventListener('click', () => {
+    modalContainer.classList.add('is-active');
+})
+//modalBtn
+if (modalContainer) {
+    modalCloseBtn.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
+    })
+}
+if (disagreeBtn) {
+    modalCardCloseBtn.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
+    })
+    agreeBtn.addEventListener('click', async () => {
+        const { dataset: { id } } = section;
+        console.log(id)
+        modalContainer.classList.remove('is-active');
+        await fetch(`/users/${id}/leave-account`, {
+            method: "GET",
+        })
+    })
+    disagreeBtn.addEventListener('click', () => {
+        modalContainer.classList.remove('is-active');
+    })
+}
