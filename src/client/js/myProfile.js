@@ -24,11 +24,13 @@ if (disagreeBtn) {
     })
     agreeBtn.addEventListener('click', async () => {
         const { dataset: { id } } = section;
-        console.log(id)
         modalContainer.classList.remove('is-active');
-        await fetch(`/users/${id}/leave-account`, {
+        const response = await fetch(`/users/${id}/leave-account`, {
             method: "GET",
         })
+        if (response.status == 201) {
+            window.location.href = "http://localhost:4000/home";
+        }
     })
     disagreeBtn.addEventListener('click', () => {
         modalContainer.classList.remove('is-active');

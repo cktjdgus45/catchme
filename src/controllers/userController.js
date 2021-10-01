@@ -34,7 +34,7 @@ export const getLeaveAccount = async (req, res) => {
     req.session.loggedIn = false;
     req.session.user = {};
     req.flash('success', '성공적으로 회원탈퇴 되었습니다.');
-    return res.redirect('/home');
+    return res.sendStatus(201);
 }
 
 export const postChangePassword = async (req, res) => {
