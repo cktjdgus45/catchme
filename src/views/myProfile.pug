@@ -15,7 +15,7 @@ block content
                 a(href=`change-password`) 비밀번호 
             li
                 a(href=`leave-account`) 회원탈퇴  
-    form(method="POST",enctype="multipart/form-data").auth__form.profile__form
+    form(method="POST",enctype="multipart/form-data",action="edit").auth__form.profile__form
         label(for="avatar").profile__form-avatar
             img(src=`${loggedInUser.avatarUrl && loggedInUser.avatarUrl.startsWith('uploads') ? "/"+loggedInUser.avatarUrl : loggedInUser.avatarUrl}`,width="100",height="100")#preview-image
             span 새 이미지 업로드
