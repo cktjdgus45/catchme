@@ -15,7 +15,7 @@ const addComment = (text, newCommentId, commentOwner, createdAt) => {
     const newComment = document.createElement("li");
     const span2 = document.createElement("span");
     newComment.dataset.id = newCommentId;
-    span2.innerHTML = `<i class="fas fa-eraser"></i>`;
+    span2.innerHTML = `<i class="fas fa-eraser" style="cursor:pointer;"></i>`;
     newComment.appendChild(span2);
     newComment.className = "comment";
     newComment.innerHTML = `
