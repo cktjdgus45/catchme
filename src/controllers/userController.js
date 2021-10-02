@@ -121,7 +121,7 @@ export const postEdit = async (req, res) => {
         session: {
             user: { _id, avatarUrl }
         },
-        body: { name, email, location },
+        body: { name, email, location, skill },
         file
     } = req;
     const isEmailExist = await User.exists({ email });
@@ -133,7 +133,8 @@ export const postEdit = async (req, res) => {
         avatarUrl: file ? file.path : avatarUrl,
         name,
         email,
-        location
+        location,
+        skill
     }, { new: true });
     req.session.user = updatedUser;
     req.flash('info', '성공적으로 업데이트 되었습니다.');
