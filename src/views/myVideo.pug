@@ -8,13 +8,13 @@ block content
     .tabs.is-large 
         ul
             li
-                a(href=`edit`) 프로파일
+                a(href=`profile`) 내정보변경
             li.is-active
                 a(href=`videos`) 동영상
             li
                 a(href=`change-password`) 비밀번호  
             li
-                a(href=`leave-account`) 회원탈퇴 
+                a() 회원탈퇴 
     if(!user.videos[0])
         span 업로드한비디오가 없습니다.
       
