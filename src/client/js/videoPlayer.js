@@ -65,17 +65,9 @@ const handleTimeUpdate = () => {
 }
 
 const diff = (videoduration) => {
-    //video duration 117 -> 1:57  117/60 11:56 1:11:15
-    if (videoduration > 60) {//분
-        const front = Math.floor(videoduration / 60);
-        const back = Math.ceil(videoduration % 60);
-        totalTime.innerText = `${front}:${back}`;
-    }
-    if (videoduration > 3600) {//시간
-        const front2 = Math.floor(videoduration / 60);
-        const back2 = Math.ceil(videoduration % 60);
-        totalTime.innerText = `${front2}:${back2}`;
-    }
+    const front = Math.floor(videoduration / 60);
+    const back = Math.ceil(videoduration % 60);
+    totalTime.innerText = `${front}:${back}`;
 }
 
 video.addEventListener('timeupdate', handleTimeUpdate);
