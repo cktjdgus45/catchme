@@ -4,8 +4,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BASE_JS = "./src/client/js/";
 
 module.exports = {
-    watch: true,
-    mode: "development",
     plugins: [new MiniCssExtractPlugin({
         filename: "css/styles.css"
     })],
