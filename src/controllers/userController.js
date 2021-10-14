@@ -192,7 +192,7 @@ export const startNaverLogin = (req, res) => {
     const baseUrl = "https://nid.naver.com/oauth2.0/authorize";
     const config = {
         client_id: process.env.NAVER_CLIENT,
-        redirect_uri: "http://localhost:4000/users/naver/finish",
+        redirect_uri: "https://catchme-s.herokuapp.com/users/naver/finish",
         response_type: "code",
         state: "RANDOM_STATE"
     }
@@ -257,7 +257,7 @@ export const startGoogleLogin = (req, res) => {
     const baseUrl = "https://accounts.google.com/o/oauth2/v2/auth";
     const config = {
         client_id: process.env.GOOGLE_CLIENT,
-        redirect_uri: "http://localhost:4000/users/google/finish",
+        redirect_uri: "https://catchme-s.herokuapp.com/users/google/finish",
         response_type: "code",
         scope: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"].join(" ")
     }
@@ -272,7 +272,7 @@ export const finishGoogleLogin = async (req, res) => {
         grant_type: "authorization_code",
         client_id: process.env.GOOGLE_CLIENT,
         client_secret: process.env.GOOGLE_SECRET,
-        redirect_uri: "http://localhost:4000/users/google/finish",
+        redirect_uri: "https://catchme-s.herokuapp.com/users/google/finish",
         code: req.query.code
     }
     const params = new URLSearchParams(config).toString();
@@ -324,7 +324,7 @@ export const startKakaoLogin = (req, res) => {
     const baseUrl = "https://kauth.kakao.com/oauth/authorize";
     const config = {
         client_id: process.env.KKO_CLIENT,
-        redirect_uri: "http://localhost:4000/users/kakao/finish",
+        redirect_uri: "https://catchme-s.herokuapp.com/users/kakao/finish",
         response_type: "code",
     }
     const params = new URLSearchParams(config).toString();
@@ -338,7 +338,7 @@ export const finishKakaoLogin = async (req, res) => {
     const config = {
         grant_type: "authorization_code",
         client_id: process.env.KKO_CLIENT,
-        redirect_uri: "http://localhost:4000/users/kakao/finish",
+        redirect_uri: "https://catchme-s.herokuapp.com/users/kakao/finish",
         code: req.query.code,
         client_secret: process.env.KKO_SECRET
     }
