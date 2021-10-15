@@ -8,7 +8,18 @@ const addComment = (text, newCommentId, commentOwner, createdAt) => {
     const currentTime = moment(createdAt);
     let cmTime = writeTime.diff(currentTime, 'seconds');
     if (cmTime < 60) {
-        cmTime = '방금 전';
+        return cmTime = currentTime.diff(commentTime, 'seconds') + '초전';
+    }
+    else if (cmTime > 60 && cmTime <= 3600) {
+        return cmTime = currentTime.diff(commentTime, 'minutes') + '분전';
+    } else if (cmTime > 3600 && cmTime <= 86400) {
+        return cmTime = currentTime.diff(commentTime, 'hours') + '시간전';
+    } else if (cmTime > 86400 && cmTime <= 2772000) {
+        return cmTime = currentTime.diff(commentTime, 'days') + '일전';
+    } else if (cmTime > 2772000 && cmTime <= 31536000) {
+        return cmTime = currentTime.diff(commentTime, 'months') + '달전';
+    } else if (cmTime > 31536000) {
+        return cmTime = currentTime.diff(commentTime, 'years') + '년전';
     }
 
     const videoComments = document.querySelector('.video__comments ul');
