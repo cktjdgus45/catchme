@@ -16,7 +16,8 @@ module.exports = {
         bulma: BASE_JS + "bulma.js",
         slider: BASE_JS + "slider.js",
         videoRecord: BASE_JS + "videoRecord.js",
-        myProfile: BASE_JS + "myProfile.js"
+        myProfile: BASE_JS + "myProfile.js",
+        premodal: BASE_JS + "premodal.js"
     },
     output: {
         filename: "js/[name].js",
