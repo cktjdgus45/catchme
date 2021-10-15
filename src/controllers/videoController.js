@@ -136,8 +136,7 @@ export const postEdit = async (req, res) => {
     const {
         user: { _id },
     } = req.session;
-    const { file: { path: fileUrl } } = req;
-    console.log(req.file);
+    const { file: { location: fileUrl } } = req;
     const { id } = req.params;
     const { title, description, hashtags } = req.body;
     const video = await Video.findById(id);
