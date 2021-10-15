@@ -5,8 +5,8 @@ const addComment = (text, newCommentId, commentOwner, createdAt) => {
     const now = moment().format('YYYY-M-D-H-m-s'); //"현재시각"
     const nowArr = now.split('-');
     const writeTime = moment(nowArr);
-    const currentTime = moment(createdAt);
-    let cmTime = writeTime.diff(currentTime, 'seconds');
+    const commentTime = moment(createdAt);
+    let cmTime = writeTime.diff(commentTime, 'seconds');
     if (cmTime < 60) {
         return cmTime = currentTime.diff(commentTime, 'seconds') + '초전';
     }
