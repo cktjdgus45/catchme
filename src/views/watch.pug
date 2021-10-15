@@ -3,7 +3,7 @@ block head
     script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
 block content 
     div#videoContainer
-        video(src="/"+video.fileUrl,data-id=video._id)
+        video(src=video.fileUrl,data-id=video._id)
         div#videoControls.videoControls
             div.videoControls__play
                 button#play.videoControls__playBtn
