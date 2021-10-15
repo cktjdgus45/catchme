@@ -5,7 +5,7 @@ const modalCloseBtn = document.querySelector('.modal-close');
 const modalCardCloseBtn = document.querySelector('.delete');
 const agreeBtn = document.querySelector('.modalSave');
 const disagreeBtn = document.querySelector('.modalClose');
-const section = document.querySelector('.is-info');
+const userSection = document.querySelector('.userData');
 
 const leave = document.querySelector('.leave-account');
 leave.addEventListener('click', () => {
@@ -22,7 +22,7 @@ if (disagreeBtn) {
         modalContainer.classList.remove('is-active');
     })
     agreeBtn.addEventListener('click', async () => {
-        const { dataset: { id } } = section;
+        const { dataset: { id } } = userSection;
         modalContainer.classList.remove('is-active');
         const response = await fetch(`/users/${id}/leave-account`, {
             method: "GET",
