@@ -16,7 +16,7 @@ block content
                     i.fas.fa-cloud-upload-alt
                     span 업로드할 동영상 선택
                     span &bull; MP4
-                    input.input.is-small(type="file",accept="video/mp4",style="display:none;",required,id="video",name="video").input-video
+                    input.input.is-small(type="file",accept="video/*",style="display:none;",required,id="video",name="video").input-video
             .column.is-three-fifths
                 input.input.is-medium(placeholder="제목을 입력하세요",required,type="text",name="title",maxlength="50",autocomplete="off")
                 textarea.input.is-medium(placeholder="영상 소개",name="description").upload__form-description
