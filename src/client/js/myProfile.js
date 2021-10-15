@@ -1,5 +1,4 @@
 //laeve account
-const videoLabel = document.getElementById('video-label');
 const modalContainer = document.querySelector('.modal');
 const modalBtn = document.querySelector('.modalBtn');
 const modalCloseBtn = document.querySelector('.modal-close');
