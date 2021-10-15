@@ -14,7 +14,7 @@ block content
             li
                 a(href=`change-password`) 비밀번호  
             li
-                a(href=`leave-account`) 회원탈퇴 
+                a() 회원탈퇴 
     if(!user.videos[0])
         span 업로드한비디오가 없습니다.
       
@@ -23,7 +23,7 @@ block content
         while n < user.videos.length
             .column.is-one-quarter
                 +video(user.videos[n])
-            - n=n+1;  
+            - n=n+1;      
     .modal 
         .modal-background 
         .modal-card 
